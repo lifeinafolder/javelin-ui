@@ -1,19 +1,19 @@
 /**
- * @requires javelin-install javelin-vector javelin-dom
- * @provides javelin-mask
+ * @requires javelin-install javelin-dom javelin-fx
  * @javelin
  */
 
 /**
- * Show a transparent "mask" over the page; used by Workflow to draw visual
- * attention to modal dialogs.
+ * Modal Plugin aka Twitter Bootstrap
  *
- * @group control
+ * @group Plugin
  */
 JX.install('Modal', {
-  construct: function(attr,message){
-    this.setAttr(attr || {});
-    this.setMsg(message);
+  construct: function(config){
+    this.setAttr(config.attr || {});
+    //if 'selector' is provided, we give that precedence over 'content'
+    this.setContent(document.querySelector(config.selector) || config.content);
+
     JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
       this.hide();
     }));
@@ -40,26 +40,20 @@ JX.install('Modal', {
         _modal.appendChild(_close);
         document.body.appendChild(_modalBg);
         this._modalBg = _modalBg;
-        JX.DOM.appendContent(_modal,this.getMsg() || '');
-        this.setMask(_modal);
 
+
+        JX.DOM.appendContent(_modal,this.getContent() || '');
+
+        this.setMask(_modal);
         document.body.appendChild(this.getMask());
 
-        JX.FX.fade(this.getMask(),1,500,JX.bind(this,function(){
-          console.log("done fading-in");
-        }));
+        JX.FX.fade(this.getMask(),1,500);
       }
       ++this._depth;
     },
     hide : function() {
       --this._depth;
-      // if (!this._depth) {
-      //   JX.DOM.remove(this.getMask());
-      //   JX.DOM.remove(this._modalBg);
-      //   this.setMask(null);
-      // }
       JX.FX.fade(this.getMask(),0,null,JX.bind(this,function(){
-        console.log("done animating");
         if (!this._depth) {
           JX.DOM.remove(this.getMask());
           JX.DOM.remove(this._modalBg);
@@ -71,6 +65,7 @@ JX.install('Modal', {
   properties: {
     mask:null,
     attr:null,
-    msg:null
+    content:null,
+    selector:null
   }
 });

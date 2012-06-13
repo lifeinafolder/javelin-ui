@@ -45,7 +45,7 @@
   </head>
   <body>
 
-    <p>This is a simple page demoing creating a Modal</p>
+    <p id="test">This is a simple page demoing creating a <strong>Modal</strong></p>
   </body>
   <script>
     var __DEV__ = 1;
@@ -56,12 +56,12 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
     JX.behavior('show-modal', function(config, statics) {
-      var modal = new JX.Modal({},config.message);
+      var modal = new JX.Modal(config);
       modal.show();
     });
 
     JX.initBehaviors({
-      'show-modal' : [{message : "Test Message"}],
+      'show-modal' : [{content : "<strong>Test Message</strong>", selector:"#test"}],
     });
   </script>
 </html>
