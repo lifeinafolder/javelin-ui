@@ -84,7 +84,7 @@ JX.install('Tooltip', {
     _show:function(){
       if(!this._present){
         var tooltip = JX.$N('span',{className:'jx-tooltip'});
-        JX.DOM.appendContent(tooltip, this.getElement().getAttribute('title'));
+        JX.DOM.appendContent(tooltip, this.getElement().getAttribute('data-tooltip'));
         this.setTooltip(tooltip);
         document.body.appendChild(tooltip);
         this._setPos();//position the tooltip correctly
