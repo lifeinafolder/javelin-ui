@@ -33,7 +33,7 @@ JX.install('Tooltip', {
   members: {
     _present:false,
     _listen:function(){
-      JX.Stratcom.listen(['mouseover','focus','mouseout','blur'], 'jx-tooltip', JX.bind(this,function(e) {
+      JX.DOM.listen(this.getElement(),['mouseover','focus','mouseout','blur'], 'jx-tooltip', JX.bind(this,function(e) {
         //TODO: Boo! This is ugly.
         if (!this.getTrigger() || 
             (this.getTrigger() === 'hover' && e.getType() === 'mouseover') ||
