@@ -44,6 +44,10 @@ JX.install('Modal', {
         this.setMask(_modal);
 
         document.body.appendChild(this.getMask());
+
+        JX.FX.fade(this.getMask(),1,500,JX.bind(this,function(){
+          console.log("done fading-in");
+        }));
       }
       ++this._depth;
     },
@@ -54,7 +58,7 @@ JX.install('Modal', {
       //   JX.DOM.remove(this._modalBg);
       //   this.setMask(null);
       // }
-      JX.FX.fade(this.getMask(),0,JX.bind(this,function(){
+      JX.FX.fade(this.getMask(),0,null,JX.bind(this,function(){
         console.log("done animating");
         if (!this._depth) {
           JX.DOM.remove(this.getMask());
