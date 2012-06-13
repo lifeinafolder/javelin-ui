@@ -24,7 +24,7 @@ JX.install('Tooltip', {
     JX.Stratcom.addSigil(element,'jx-tooltip')
     this.setElement(element);
     this.setTrigger(config.trigger);
-
+    this.setPosition(config.position);
     if(this.getTrigger !== 'manual'){
       this._listen();
     }
@@ -50,12 +50,44 @@ JX.install('Tooltip', {
         }
       }));
     },
+    _setPos:function(){
+        var position = this.getPosition() || 'top';
+        var tooltip = this.getTooltip();
+
+        var pos = JX.Vector.getPos(this.getElement());
+        var dim = JX.Vector.getDim(this.getElement());
+
+        //find center coordinates
+        var cords = {
+          x: pos.x + (dim.x/2) - (JX.Vector.getDim(tooltip).x/2),
+          y: pos.y + (dim.y/2) - (JX.Vector.getDim(tooltip).y/2)
+        };
+
+        switch(position){
+          case 'top':
+            cords.y = pos.y - (JX.Vector.getDim(tooltip).y);
+            break;
+          case 'bottom':
+            cords.y = pos.y + dim.y;
+            break;
+          case 'left':
+            cords.x = pos.x - (JX.Vector.getDim(tooltip).x);
+            break;
+          case 'right':
+            cords.x = pos.x + dim.x;
+            break;
+          default:
+            JX.$E('\'position\' can only be one of ' + JX.Tooltip.positions.toString());
+        }
+        JX.$V(cords.x,cords.y).setPos(this.getTooltip());
+    },
     _show:function(){
       if(!this._present){
         var tooltip = JX.$N('span',{className:'jx-tooltip'});
         JX.DOM.appendContent(tooltip, this.getElement().getAttribute('title'));
         this.setTooltip(tooltip);
         document.body.appendChild(tooltip);
+        this._setPos();//position the tooltip correctly
       }
       this._present = true;
     },
@@ -65,13 +97,13 @@ JX.install('Tooltip', {
     }
   },
   statics:{
-    //positions: ['top','bottom', 'left', 'right'],
-    trigger: ['hover','focus','manual']
+    positions: ['top','bottom', 'left', 'right'],
+    trigger: ['hover','focus','manual'] //TODO: For future validation purposes
   },
   properties: {
-    placement:null,
     element:null,
     tooltip:null,
-    trigger:null
+    trigger:null,
+    position:null
   }
 });

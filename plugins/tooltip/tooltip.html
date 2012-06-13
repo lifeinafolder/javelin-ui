@@ -9,7 +9,7 @@
   </head>
   <body>
     <p id="test" title="test title">This is a simple example showcasing the Tooltip plugin.</p>
-    <input id="test2" title="input type" type="text"/>
+    <input id="test2" title="input type" type="text" style="margin-left:50%; margin-top:300px"/>
   </body>
   <script>
     var __DEV__ = 1;
@@ -24,7 +24,7 @@
     });
 
     JX.initBehaviors({
-      'show-tooltip' : [{selector:'#test', trigger: 'hover'},{selector:'#test2',trigger:'focus'}],
+      'show-tooltip' : [{selector:'#test', trigger: 'hover'},{selector:'#test2',trigger:'focus', position:'left'}],
     });
   </script>
 </html>
