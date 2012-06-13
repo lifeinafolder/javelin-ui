@@ -10,6 +10,15 @@
  */
 JX.install('Modal', {
   construct: function(config){
+    config = config || {};
+    if (__DEV__) {
+      if (!config.selector || !config.content) {
+        JX.$E(
+          'new JX.Modal(<?>, ...): '+
+          'Either a DOM \'selector\' or \'content\' (String) is required for Modal to operate' );
+      }
+    }
+
     this.setAttr(config.attr || {});
     //if 'selector' is provided, we give that precedence over 'content'
     this.setContent(document.querySelector(config.selector) || config.content);
