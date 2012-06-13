@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Javelin Example: Simple</title>
+    <script src="../../javelin/pkg/init.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../default.css">
+    <link rel="stylesheet" type="text/css" href="tooltip.css">
+  </head>
+  <body>
+    <p id="test" title="test title">This is a simple example showcasing the Tooltip plugin.</p>
+    <input id="test2" title="input type" type="text"/>
+  </body>
+  <script>
+    var __DEV__ = 1;
+  </script>
+  <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+  <script src="Tooltip.js" type="text/javascript"></script>
+  <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    JX.Stratcom.mergeData(0, {});
+    JX.behavior('show-tooltip', function(config, statics) {
+      var tooltip = new JX.Tooltip(config);
+    });
+
+    JX.initBehaviors({
+      'show-tooltip' : [{selector:'#test', trigger: 'hover'},{selector:'#test2',trigger:'focus'}],
+    });
+  </script>
+</html>
