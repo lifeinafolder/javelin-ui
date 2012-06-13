@@ -54,10 +54,13 @@
   <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
-
-    JX.onload(function() {
-      var modal = new JX.Modal({},'Test Modal');
+    JX.behavior('show-modal', function(config, statics) {
+      var modal = new JX.Modal({},config.message);
       modal.show();
+    });
+
+    JX.initBehaviors({
+      'show-modal' : [{message : "Test Message"}],
     });
   </script>
 </html>
