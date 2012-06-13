@@ -1,0 +1,65 @@
+.jx-modal
+{
+  padding:10px;
+  width:500px;
+  left:50%;
+  top:50%;
+  margin: -250px 0px 0px -250px;
+  opacity:0;
+  position: fixed;
+  overflow:auto;
+  z-index:1000;
+  background:white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.jx-modal .modal-body
+{
+  max-height:400px;
+  overflow-y:auto;
+}
+
+.jx-modal .modal-header
+{
+  border-bottom:1px solid #EEE;
+}
+
+.jx-modal-close
+{
+  cursor:pointer;
+  float: right;
+  color: black;
+  text-shadow: 0 1px 0 white;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}
+
+.jx-modal-close:hover
+{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
+.jx-modal-bg
+{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  opacity:0.8;
+  z-index:999;
+}
