@@ -64,7 +64,7 @@ JX.install('FX', {
     stop: function() {
       clearInterval(this._interval);
       this._interval = null;
-      (this.getCbk())();
+      this.getCbk() && (this.getCbk())();
       return this;
     },
 
