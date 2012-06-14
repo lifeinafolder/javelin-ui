@@ -55,10 +55,11 @@ JX.install('Carousel', {
           // Pause on 'mouseenter'
           if (e.getType() === 'mouseover'){
             clearInterval(this._timer);
+            this._timer = null;
           }
 
           // Resume on 'mouseleave'
-          if (e.getType() === 'mouseout'){
+          if (e.getType() === 'mouseout' && !this._timer){
             this._auto();
           }
         }));
