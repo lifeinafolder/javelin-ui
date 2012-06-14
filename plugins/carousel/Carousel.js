@@ -21,12 +21,14 @@ JX.install('Carousel', {
 
     this.setAutoMode(!!config.interval);
     this.setInterval(config.interval || 5000);
+    this.setPause(config.pause);
     this.setElement(document.querySelector(config.selector));
     this._start();
   },
   members: {
     _current:null,
     _slides:null,
+    _timer:null,
     _start:function(){
       //Hook up 'prev' & 'next' UI controls
       var controls = JX.DOM.scry(this.getElement(),'div','carousel-control');
@@ -48,6 +50,20 @@ JX.install('Carousel', {
       JX.DOM.listen(prevControl,'click', null, JX.bind(this,this._prev));
       JX.DOM.listen(nextControl,'click', null, JX.bind(this,this._next));
 
+      if (JX.Carousel.pause.indexOf(this.getPause()) > -1) {
+        JX.DOM.listen(this.getElement(),['mouseover','mouseout'], null, JX.bind(this,function(e){
+          // Pause on 'mouseenter'
+          if (e.getType() === 'mouseover'){
+            clearInterval(this._timer);
+          }
+
+          // Resume on 'mouseleave'
+          if (e.getType() === 'mouseout'){
+            this._auto();
+          }
+        }));
+      }
+
       //Set the slides
       var slides = JX.DOM.scry(this.getElement(),'div','item');
       this._slides = slides;
@@ -63,11 +79,7 @@ JX.install('Carousel', {
       }
 
       //if automatic cycling is 'on'
-      if(this.getAutoMode()){
-        setInterval(JX.bind(this,function(){
-          this._next();
-        }),this.getInterval());
-      }
+      this.getAutoMode() && this._auto();
     },
     _next: function(){
       JX.DOM.hide(this._slides[this._current]);
@@ -78,14 +90,21 @@ JX.install('Carousel', {
       JX.DOM.hide(this._slides[this._current]);
       this._current = (this._current === 0) ? this._slides.length-1 : this._current-1;
       JX.DOM.show(this._slides[this._current]);
+    },
+    _auto:function(){
+      this._timer = setInterval(JX.bind(this,function(){
+        this._next();
+      }),this.getInterval());
     }
   },
   statics:{
-    directions:['prev','next']
+    directions:['prev','next'],
+    pause:['hover']
   },
   properties: {
     autoMode:null,
     interval:null,
-    element:null
+    element:null,
+    pause:null
   }
 });
