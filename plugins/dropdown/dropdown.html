@@ -7,25 +7,37 @@
     <link rel="stylesheet" type="text/css" href="../default.css">
     <link rel="stylesheet" type="text/css" href="dropdown.css">
     <style>
-      #dropdown-handle
+      #dropdown
       {
-        position:absolute;
+        position: absolute;
         top:200px;
         left:200px;
+      }
+
+      .handle
+      {
         border:1px solid #0BC;
         color:white;
         background:#0BC;
-        padding:20px;
+        padding:0px;
+      }
+
+      .menu
+      {
+        list-style-type:none;
+        border:1px solid red;
       }
     </style>
   </head>
   <body>
-    <div data-sigil="dropdown-handle" id="dropdown-handle">Dropdown</div>
-    <ul data-sigil="dropdown-menu" id="dropdown" style="list-style:none">
-      <li data-sigil="dropdown-item">Option 1</li>
-      <li data-sigil="dropdown-item">Option 2</li>
-      <li data-sigil="dropdown-item">Option 3</li>
-    </ul>
+    <div id="dropdown">
+      <div data-sigil="dropdown-handle" class="handle">Dropdown</div>
+      <ul data-sigil="dropdown-menu" class="menu">
+        <li data-sigil="dropdown-item">Option 1</li>
+        <li data-sigil="dropdown-item">Option 2</li>
+        <li data-sigil="dropdown-item">Option 3</li>
+      </ul>
+    </div>
   </body>
   <script>
     var __DEV__ = 1;
@@ -40,7 +52,7 @@
     });
 
     JX.initBehaviors({
-      'show-dropdown' : [{handle:'#dropdown-handle',selector:'#dropdown', align:'right'}],
+      'show-dropdown' : [{selector:'#dropdown', align:'right'}],
     });
   </script>
 </html>

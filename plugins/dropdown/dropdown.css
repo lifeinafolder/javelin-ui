@@ -1,5 +1,10 @@
 .jx-dropdown
 {
+  position:relative;
+}
+
+.jx-dropdown-menu
+{
   position: absolute;
   cursor:pointer;
 }
