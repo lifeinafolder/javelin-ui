@@ -20,7 +20,9 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
     JX.behavior('show-tooltip', function(config, statics) {
-      var tooltip = new JX.Tooltip(config);
+      var selector = config.selector;
+      delete config.selector;
+      var tooltip = new JX.Tooltip(selector, config);
     });
 
     JX.initBehaviors({

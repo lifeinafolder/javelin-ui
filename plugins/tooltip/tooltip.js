@@ -9,17 +9,17 @@
  * @group Plugin
  */
 JX.install('Tooltip', {
-  construct: function(config){
+  construct: function(selector, config){
     config = config || {};
     if (__DEV__) {
-      if (!config.selector) {
+      if (!selector) {
         JX.$E(
           'new JX.Tooltip(<?>, ...): '+
           '\'selector\' is required to create a tooltip');
       }
     }
 
-    var element = document.querySelector(config.selector);
+    var element = document.querySelector(selector);
 
     JX.Stratcom.addSigil(element,'jx-tooltip')
     this.setElement(element);
