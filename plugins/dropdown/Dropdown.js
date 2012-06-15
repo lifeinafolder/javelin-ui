@@ -9,16 +9,16 @@
  * @group Plugin
  */
 JX.install('Dropdown', {
-  construct: function(config){
+  construct: function(selector, config){
     config = config || {};
     if (__DEV__) {
-      if (!config.selector) {
+      if (!selector) {
         JX.$E(
           'new JX.Dropdown(<?>, ...): '+
           'a DOM \'selector\' is required for Dropdown to operate' );
       }
     }
-    this.setElement(document.querySelector(config.selector));
+    this.setElement(document.querySelector(selector));
     this.setAlign(config.align || 'left');
 
     this._start();

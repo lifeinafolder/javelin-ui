@@ -48,7 +48,9 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
     JX.behavior('show-dropdown', function(config, statics) {
-      var dropdown = new JX.Dropdown(config);
+      var selector = config.selector;
+      delete config.selector;
+      var dropdown = new JX.Dropdown(selector, config);
     });
 
     JX.initBehaviors({
