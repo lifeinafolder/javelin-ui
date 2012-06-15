@@ -27,7 +27,9 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
     JX.behavior('carousel-effect', function(config, statics) {
-      var carousel = new JX.Carousel(config);
+      var selector = config.selector;
+      delete config.selector;
+      var carousel = new JX.Carousel(selector, config);
     });
 
     JX.initBehaviors({

@@ -9,10 +9,10 @@
  * @group Plugin
  */
 JX.install('Carousel', {
-  construct: function(config){
+  construct: function(selector, config){
     config = config || {};
     if (__DEV__) {
-      if (!config.selector) {
+      if (!selector) {
         JX.$E(
           'new JX.Carousel(<?>, ...): '+
           '\'selector\' is required to create a Carousel');
@@ -22,7 +22,7 @@ JX.install('Carousel', {
     this.setAutoMode(!!config.interval);
     this.setInterval(config.interval || 5000);
     this.setPause(config.pause);
-    this.setElement(document.querySelector(config.selector));
+    this.setElement(document.querySelector(selector));
     this._start();
   },
   members: {
