@@ -2365,7 +2365,7 @@ JX.install('Vector', {
      * @return this
      * @task update
      */
-    setPos : function(node) {
+    setPos : function(node,xDir,yDir) {
       xDir = xDir || 'left';
       yDir = yDir || 'top';
       node.style[xDir] = (this.x === null) ? '' : (parseInt(this.x, 10) + 'px');
