@@ -34,8 +34,8 @@ JX.install('Button', {
   },
   events : ['start', 'done'],
   members: {
-    _cbk:function(){
-      this.invoke('done');
+    _cbk:function(response){
+      this.invoke('done',null, response);
     },
     start:function(){
       this.invoke('start');
