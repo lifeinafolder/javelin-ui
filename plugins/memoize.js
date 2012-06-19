@@ -10,7 +10,6 @@
  */
 JX.install('Memoize', {
   construct: function(){
-    console.log('invoked');
     JX.Stratcom.addData(this.getElement(),{
       '_cacheId' : this.__id__
     });
