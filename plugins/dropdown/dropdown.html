@@ -50,7 +50,13 @@
     JX.Stratcom.mergeData(0, {});
 
     JX.initBehaviors({
-      'show-dropdown' : [{selector:'#dropdown', align:'left'}],
+      'show-dropdown' : [{
+        selector:'#dropdown',
+        align:'right',
+        onItemClick:function(response){
+          console.log('Response:', response);
+        }
+      }],
     });
   </script>
 </html>

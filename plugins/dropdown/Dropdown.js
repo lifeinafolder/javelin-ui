@@ -30,14 +30,16 @@ JX.install('Dropdown', {
           (this.present) ? this.hide() : this.show();
           break;
         case 'dropdown-item':
-          this.invoke('click', JX.copy({},target.dataset));
+          var res = JX.copy({},target.dataset);
+          delete res['sigil'];
+          this.invoke('itemClick', res);
           break;
         default:
           this.hide();
       }
     }));
   },
-  events:['click'],
+  events:['itemClick'],
   members: {
     start:function(){
       //Hide the dropdown
@@ -62,7 +64,5 @@ JX.behavior('show-dropdown', function(config, statics) {
   delete config.selector;
   var dropdown = new JX.Dropdown(selector, config);
 
-  dropdown.listen('click',function(r){
-    console.log(r);
-  })
+  dropdown.listen('itemClick', config.onItemClick);
 });
