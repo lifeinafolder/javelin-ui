@@ -26,7 +26,12 @@
           name:'Tom',
           age:21
         },
-        onDone:function(node){
+        onStart:function(){
+          var node = this.getElement();
+          JX.DOM.setContent(node,'loading...')
+        },
+        onDone:function(){
+          var node = this.getElement();
           JX.DOM.setContent(node,'hahaha');
         }
       },
