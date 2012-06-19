@@ -9,7 +9,7 @@
  * @group Plugin
  */
 JX.install('Button', {
-  construct: function(uri, selector, config){
+  construct: function(uri, node, config){
     config = config || {};
     if (__DEV__) {
       if (!uri) {
@@ -17,38 +17,28 @@ JX.install('Button', {
           'new JX.Button(<?>, ...): '+
           'A \'uri\' is required for Button to operate' );
       }
-      if (!selector) {
+      if (!node) {
         JX.$E(
           'new JX.Button(<>,<?> ...): '+
-          'A \'selector\' is required for Button to operate' );
+          'A DOM \'node\' is required for Button to operate' );
       }
     }
 
     // Set 'required' fields
     this.setUri(uri);
-    this.setSelector(selector);
+    this.setElement(node);
 
     // Set 'config' options
     this.setData(config.data);
     this.setMethod(config.method || 'POST');
-
-    // Attach listener for 'click'
-    JX.Stratcom.listen('click', selector, JX.bind(this,function(e){
-      var node = e.getNode(this.getSelector());
-      this.setElement(node);
-      var initialState = node.textContent;
-      this.setLoading(config.loadingState || 'loading...');
-      this.setCompleteState(config.onCompleteState || initialState);
-
-      this._start();
-    }));
   },
+  events : ['start', 'done'],
   members: {
     _cbk:function(){
-      JX.DOM.setContent(this.getElement(),this.getCompleteState());
+      this.invoke('done');
     },
-    _start:function(){
-      JX.DOM.setContent(this.getElement(), this.getLoading());
+    start:function(){
+      this.invoke('start');
       var r = new JX.Request(this.getUri(),JX.bind(this,this._cbk));
       r.setMethod(this.getMethod());
       r.setData(this.getData());
@@ -57,11 +47,50 @@ JX.install('Button', {
   },
   properties: {
     uri:null,
-    loading:null,
-    selector:null,
     element:null,
-    completeState:null,
     data:null,
     method:null
   }
+});
+
+JX.behavior('button', function(config, statics) {
+  var map = {};
+  JX.Stratcom.listen('click', 'button', JX.bind(this,function(e){
+    var data = e.getNodeData('button');
+    if(map[data.id]){
+      //console.log('cached');
+      map[data.id].start();
+    }
+    else{
+      var uri = data.uri;
+      delete data['uri'];
+      var node = e.getTarget();
+
+      JX.Stratcom.addData(node,{
+        'initialState': node.textContent
+      });
+
+      var b = new JX.Button(uri,node,data);
+
+      b.listen('start',function(e1){
+        //console.log('onStart');
+        var node = this.getElement();
+        // Is there a 'start' listener attached
+        var fn = JX.Stratcom.getData(node).onStart;
+        fn && fn(this.getElement());
+      });
+
+      b.listen('done',function(e1){
+        //console.log('onDone');
+        var node = this.getElement();
+        // Is there a 'done' listener attached
+        var fn = JX.Stratcom.getData(node).onDone;
+        fn && fn(this.getElement());
+      });
+
+      map[data.id] = b;
+
+      b.start();
+    }
+  }));
 });
