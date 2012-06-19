@@ -53,25 +53,30 @@ JX.install('Button', {
   }
 });
 
-JX.behavior('button', function(config, statics) {
+JX.behavior('button', function() {
   var map = {};
   JX.Stratcom.listen('click', 'button', JX.bind(this,function(e){
     var data = e.getNodeData('button');
-    if (map[data.id]) {
-      //console.log('cached');
-      map[data.id].start();
+    if (map[data._cacheId]) {
+      console.log('cached');
+      map[data._cacheId].start();
     }
     else {
+      console.log('not cached');
       var uri = data.uri;
       delete data['uri'];
       var node = e.getTarget();
 
       var b = new JX.Button(uri,node,data);
 
+      //Cache it
+      JX.Stratcom.addData(node,{
+        '_cacheId' : b.__id__
+      });
+      map[b.__id__] = b;
+
       data.onStart && b.listen('start', data.onStart);
       data.onDone && b.listen('done', data.onDone);
-
-      map[data.id] = b;
 
       b.start();
     }
