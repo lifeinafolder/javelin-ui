@@ -35,7 +35,7 @@ JX.install('Button', {
   events : ['start', 'done'],
   members: {
     _cbk:function(response){
-      this.invoke('done',null, response);
+      this.invoke('done', response);
     },
     start:function(){
       this.invoke('start');
@@ -57,11 +57,11 @@ JX.behavior('button', function(config, statics) {
   var map = {};
   JX.Stratcom.listen('click', 'button', JX.bind(this,function(e){
     var data = e.getNodeData('button');
-    if(map[data.id]){
+    if (map[data.id]) {
       //console.log('cached');
       map[data.id].start();
     }
-    else{
+    else {
       var uri = data.uri;
       delete data['uri'];
       var node = e.getTarget();
