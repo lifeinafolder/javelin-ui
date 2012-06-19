@@ -58,11 +58,11 @@ JX.behavior('button', function() {
   JX.Stratcom.listen('click', 'button', JX.bind(this,function(e){
     var data = e.getNodeData('button');
     if (map[data._cacheId]) {
-      console.log('cached');
+      //console.log('cached');
       map[data._cacheId].start();
     }
     else {
-      console.log('not cached');
+      //console.log('not cached');
       var uri = data.uri;
       delete data['uri'];
       var node = e.getTarget();
