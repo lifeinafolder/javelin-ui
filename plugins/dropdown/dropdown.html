@@ -31,11 +31,11 @@
   </head>
   <body>
     <div id="dropdown">
-      <div data-sigil="dropdown-handle" class="handle">Dropdown</div>
+      <div data-sigil="dropdown-handle" class="handle">-</div>
       <ul data-sigil="dropdown-menu" class="menu">
-        <li data-sigil="dropdown-item">Option 1</li>
-        <li data-sigil="dropdown-item">Option 2</li>
-        <li data-sigil="dropdown-item">Option 3</li>
+        <li data-value="one" data-sigil="dropdown-item">Option 1</li>
+        <li data-value="two" data-sigil="dropdown-item">Option 2</li>
+        <li data-value="three" data-sigil="dropdown-item">Option 3</li>
       </ul>
     </div>
   </body>
@@ -43,18 +43,14 @@
     var __DEV__ = 1;
   </script>
   <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+  <script src="../toggle/Toggle.js" type="text/javascript"></script>
   <script src="Dropdown.js" type="text/javascript"></script>
   <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, {});
-    JX.behavior('show-dropdown', function(config, statics) {
-      var selector = config.selector;
-      delete config.selector;
-      var dropdown = new JX.Dropdown(selector, config);
-    });
 
     JX.initBehaviors({
-      'show-dropdown' : [{selector:'#dropdown', align:'right'}],
+      'show-dropdown' : [{selector:'#dropdown', align:'left'}],
     });
   </script>
 </html>
