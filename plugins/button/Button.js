@@ -66,27 +66,10 @@ JX.behavior('button', function(config, statics) {
       delete data['uri'];
       var node = e.getTarget();
 
-      JX.Stratcom.addData(node,{
-        'initialState': node.textContent
-      });
-
       var b = new JX.Button(uri,node,data);
 
-      b.listen('start',function(e1){
-        //console.log('onStart');
-        var node = this.getElement();
-        // Is there a 'start' listener attached
-        var fn = JX.Stratcom.getData(node).onStart;
-        fn && fn(this.getElement());
-      });
-
-      b.listen('done',function(e1){
-        //console.log('onDone');
-        var node = this.getElement();
-        // Is there a 'done' listener attached
-        var fn = JX.Stratcom.getData(node).onDone;
-        fn && fn(this.getElement());
-      });
+      data.onStart && b.listen('start', data.onStart);
+      data.onDone && b.listen('done', data.onDone);
 
       map[data.id] = b;
 
