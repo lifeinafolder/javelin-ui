@@ -23,8 +23,16 @@ JX.install('Button', {
           'A \'selector\' is required for Button to operate' );
       }
     }
+
+    // Set 'required' fields
     this.setUri(uri);
     this.setSelector(selector);
+
+    // Set 'config' options
+    this.setData(config.data);
+    this.setMethod(config.method || 'POST');
+
+    // Attach listener for 'click'
     JX.Stratcom.listen('click', selector, JX.bind(this,function(e){
       var node = e.getNode(this.getSelector());
       this.setElement(node);
@@ -42,7 +50,8 @@ JX.install('Button', {
     _start:function(){
       JX.DOM.setContent(this.getElement(), this.getLoading());
       var r = new JX.Request(this.getUri(),JX.bind(this,this._cbk));
-      //r.setMethod('GET');
+      r.setMethod(this.getMethod());
+      r.setData(this.getData());
       r.send();
     }
   },
@@ -51,6 +60,8 @@ JX.install('Button', {
     loading:null,
     selector:null,
     element:null,
-    completeState:null
+    completeState:null,
+    data:null,
+    method:null
   }
 });
