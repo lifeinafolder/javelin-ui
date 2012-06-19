@@ -23,14 +23,16 @@ JX.install('Tooltip', {
     this.setElement(node);
     this.setTrigger(config.trigger);
     this.setPosition(config.position);
+
+    JX.Memoize.call(this);
   },
   members: {
-    _present:false,
-    _title:null,
-    _tooltip:null,
-    _setPos:function(){
+    present:false,
+    title:null,
+    tooltip:null,
+    setPos:function(){
         var position = this.getPosition() || 'top';
-        var tooltip = this._tooltip;
+        var tooltip = this.tooltip;
 
         var pos = JX.Vector.getPos(this.getElement());
         var dim = JX.Vector.getDim(this.getElement());
@@ -57,21 +59,21 @@ JX.install('Tooltip', {
           default:
             JX.$E('\'position\' can only be one of ' + JX.Tooltip.positions.toString());
         }
-        JX.$V(cords.x,cords.y).setPos(this._tooltip);
+        JX.$V(cords.x,cords.y).setPos(this.tooltip);
     },
     show:function(){
-      if(!this._present){
-        this._tooltip = JX.$N('span',{className:'jx-tooltip'});
-        this._title = this.getElement().dataset['tooltip'];
-        JX.DOM.appendContent(this._tooltip, this._title);
-        document.body.appendChild(this._tooltip);
-        this._setPos();//position the tooltip correctly
+      if(!this.present){
+        this.tooltip = JX.$N('span',{className:'jx-tooltip'});
+        this.title = this.getElement().dataset['tooltip'];
+        JX.DOM.appendContent(this.tooltip, this.title);
+        document.body.appendChild(this.tooltip);
+        this.setPos();//position the tooltip correctly
       }
-      this._present = true;
+      this.present = true;
     },
     hide:function(){
-      this._present = false;
-      JX.DOM.remove(this._tooltip);
+      this.present = false;
+      JX.DOM.remove(this.tooltip);
     }
   },
   statics:{
@@ -82,7 +84,8 @@ JX.install('Tooltip', {
     element:null,
     trigger:null,
     position:null,
-  }
+  },
+  extend:'Memoize'
 });
 
 JX.behavior('show-tooltip', function(config, statics) {
@@ -91,9 +94,10 @@ JX.behavior('show-tooltip', function(config, statics) {
     var data = e.getNodeData('tooltip');
     var node = e.getTarget();
     var obj;
-    if (map[data._cacheId]) {
+    var cachedObj = JX.Memoize.find(data._cacheId);
+    if (cachedObj) {
       //console.log('cached');
-      obj = map[data._cacheId];
+      obj = cachedObj;
     }
     else {
       //console.log('not cached');
