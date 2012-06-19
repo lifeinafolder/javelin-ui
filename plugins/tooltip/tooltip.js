@@ -64,10 +64,11 @@ JX.install('Tooltip', {
     show:function(){
       if(!this.present){
         this.tooltip = JX.$N('span',{className:'jx-tooltip'});
-        this.title = this.getElement().dataset['tooltip'];
+        this.title = this.title || this.getElement().getAttribute('title');
         JX.DOM.appendContent(this.tooltip, this.title);
         document.body.appendChild(this.tooltip);
         this.setPos();//position the tooltip correctly
+        this.getElement().removeAttribute('title');
       }
       this.present = true;
     },
