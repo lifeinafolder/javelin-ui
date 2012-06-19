@@ -9,6 +9,7 @@
  * @group Plugin
  */
 JX.install('Button', {
+  extend: 'Memoize',
   construct: function(uri, node, config){
     config = config || {};
     if (__DEV__) {
@@ -31,15 +32,18 @@ JX.install('Button', {
     // Set 'config' options
     this.setData(config.data);
     this.setMethod(config.method || 'POST');
+
+    //Setup 'memoize'
+    JX.Memoize.call(this);
   },
   events : ['start', 'done'],
   members: {
-    _cbk:function(response){
+    cbk:function(response){
       this.invoke('done', response);
     },
     start:function(){
       this.invoke('start');
-      var r = new JX.Request(this.getUri(),JX.bind(this,this._cbk));
+      var r = new JX.Request(this.getUri(),JX.bind(this,this.cbk));
       r.setMethod(this.getMethod());
       r.setData(this.getData());
       r.send();
@@ -57,9 +61,10 @@ JX.behavior('button', function() {
   var map = {};
   JX.Stratcom.listen('click', 'button', JX.bind(this,function(e){
     var data = e.getNodeData('button');
-    if (map[data._cacheId]) {
+    var cachedObj = JX.Memoize.find(data._cacheId);
+    if (cachedObj) {
       //console.log('cached');
-      map[data._cacheId].start();
+      cachedObj.start();
     }
     else {
       //console.log('not cached');
@@ -68,12 +73,6 @@ JX.behavior('button', function() {
       var node = e.getTarget();
 
       var b = new JX.Button(uri,node,data);
-
-      //Cache it
-      JX.Stratcom.addData(node,{
-        '_cacheId' : b.__id__
-      });
-      map[b.__id__] = b;
 
       data.onStart && b.listen('start', data.onStart);
       data.onDone && b.listen('done', data.onDone);
