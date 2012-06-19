@@ -93,23 +93,16 @@ JX.behavior('show-tooltip', function(config, statics) {
   JX.Stratcom.listen(['mouseover','focus','mouseout','blur'], 'tooltip', JX.bind(this,function(e){
     var data = e.getNodeData('tooltip');
     var node = e.getTarget();
-    var obj;
+
     var cachedObj = JX.Memoize.find(data._cacheId);
+
     if (cachedObj) {
       //console.log('cached');
-      obj = cachedObj;
+      var obj = cachedObj;
     }
     else {
       //console.log('not cached');
       var obj = new JX.Tooltip(node, data);
-
-      //Cache it
-      JX.Stratcom.addData(node,{
-        '_cacheId' : obj.__id__
-      });
-      map[obj.__id__] = obj;
-
-      //console.log(b.getTrigger(),e.getType());
     }
 
     if (!obj.getTrigger() ||
