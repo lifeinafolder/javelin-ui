@@ -9,19 +9,18 @@
  * @group Plugin
  */
 JX.install('Modal', {
-  construct: function(config){
+  construct: function(source, config){
     config = config || {};
     if (__DEV__) {
-      if (!config.selector || !config.content) {
+      if (!source) {
         JX.$E(
           'new JX.Modal(<?>, ...): '+
-          'Either a DOM \'selector\' or \'content\' (String) is required for Modal to operate' );
+          '\'Source\' is required for Modal to operate' );
       }
     }
 
-    this.setAttr(config.attr || {});
-    //if 'selector' is provided, we give that precedence over 'content'
-    this.setContent(document.querySelector(config.selector) || config.content);
+    // Set 'Modal' source
+    this.setContent(source);
 
     JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
       this.hide();
@@ -30,17 +29,18 @@ JX.install('Modal', {
     JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
       this.hide();
     }));
+
+    //Show the 'Modal'
+    this.show();
   },
   members: {
     _depth: 0,
     _modalBg:null,
     show : function() {
       if (!this._depth) {
-        var attr = this.getAttr();
-        JX.copy(attr,{className: 'jx-modal'});
         
         var _modalBg = JX.$N('div',{className : 'jx-modal-bg'});
-        var _modal = JX.$N('div', attr);
+        var _modal = JX.$N('div', {className: 'jx-modal'});
         var _close = JX.$N('div',{className: 'jx-modal-close',},'X');
 
         JX.Stratcom.addSigil(_close, 'modal-close');
@@ -73,8 +73,29 @@ JX.install('Modal', {
   },
   properties: {
     mask:null,
-    attr:null,
-    content:null,
-    selector:null
+    content:null
+  }
+});
+
+
+JX.behavior('show-modal', function(config, statics) {
+  var source = config.source;
+  delete config.source;
+
+  try { // Is it a DOM node?
+    var isDomNode = document.querySelector(source);
+    var modal = new JX.Modal(isDomNode, config);
+  }
+  catch(e){
+    if (source.search(/https?:\/\//gi) === 0){ // Is it a remote URI ?
+      var r = new JX.Request(source, function(response){
+        var modal = new JX.Modal(response, config);
+      });
+      r.setMethod('GET');
+      r.send();
+    }
+    else { // Assume its a String
+      var modal = new JX.Modal(source, config);
+    }
   }
 });
