@@ -41,11 +41,12 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, [
       {
-        onDone:function(response){
+        onDone: function(response){
           console.log('form submitted',response);
         },
-        uri:'/plugins/button/backend.php',
-        validationFns: [ function(){return true;}, function(){return false;}]
+        onValidationFail: function(response){
+
+        }
       }
     ]);
 
