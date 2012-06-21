@@ -45,8 +45,11 @@
         onDone: function(response){
           console.log('form submitted', response);
         },
-        onValidationFail: function(response){
+        onValidationFail: function(){
           console.log('validation failed');
+        },
+        onValidationDone: function(){
+          console.log('validation succeeded');
         }
       }
     ]);

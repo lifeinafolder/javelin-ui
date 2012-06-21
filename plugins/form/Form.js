@@ -169,7 +169,9 @@ JX.behavior('form', function(config, statics) {
     var f = new JX.Form(action, validationObjs);
 
     f.listen('done',data.onDone);
+    f.listen('fail',data.onFail); // TODO: 'Form' Class doesn't invoke 'fail' event yet.
     f.listen('invalid', data.onValidationFail);
+    f.listen('valid', data.onValidationDone);
     f.submit();
   });
 });
