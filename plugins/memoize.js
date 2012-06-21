@@ -1,24 +1,26 @@
 /**
- * @requires javelin-install javelin-dom javelin-fx
+ * @requires javelin-stratcom
  * @javelin
  */
 
 /**
- * Button Plugin aka Twitter Bootstrap
- *
- * @group Plugin
+ * Memoize class
  */
-JX.install('Memoize', {
-  construct: function(){
-    JX.Stratcom.addData(this.getElement(),{
-      '_cacheId' : this.__id__
-    });
-    JX.Memoize._map[this.__id__] = this;
-  },
-  statics: {
-    _map: {},
-    find: function(cacheId) {
-      return JX.Memoize._map[cacheId];
+JX.Memoize = (function(){
+  var map = {};
+
+  return {
+    find : function(id) {
+      return map[id];
+    },
+    add : function(obj){
+      JX.Stratcom.addData(obj.getElement(),{
+        '_cacheId' : obj.__id__
+      });
+      map[obj.__id__] = obj;
+    },
+    remove : function(id){
+      delete map[id];
     }
   }
-});
+})();
