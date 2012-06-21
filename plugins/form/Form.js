@@ -4,6 +4,68 @@
  */
 
 /**
+ * Validate Plugin
+ *
+ * @group Plugin
+ */
+JX.install('Validate', {
+  extend: 'Memoize',
+  construct: function(node, validationFn){
+    if (__DEV__) {
+      if (!node) {
+        JX.$E(
+          'new JX.Validate(<?>, ...): '+
+          'A DOM \'node\' is required for Validate to operate' );
+      }
+      if (!validationFn) {
+        JX.$E(
+          'new JX.Validate(<>,<?> ...): '+
+          'A \'validationFn\' callback is required for Validate to operate' );
+      }
+    }
+
+    this.setElement(node);
+    this.setValidationFn(validationFn);
+
+    JX.Stratcom.addData(node, { _objId: this.__id__});
+    JX.Validate._store[this.__id__] = this;
+    JX.Memoize.call(this);
+
+    JX.DOM.listen(node, ['focus','blur','change'], 'form-field', function(e){
+      var data = e.getNodeData('form-field');
+      var target = e.getTarget();
+      var trigger = data.trigger || 'blur';
+
+      var obj = JX.Memoize.find(data._cacheId);
+      //console.log(obj.__id__);
+      if (obj && (target === obj.getElement()) && (e.getType() === trigger)){
+        obj.validate();
+      }
+    });
+  },
+  events: ['start','done','fail'],
+  members: {
+    validate: function(){
+      this.invoke('start');
+      (this.getValidationFn())(JX.bind(this,function(response){
+        this.invoke( response ? 'done' : 'fail');
+      }));
+    }
+  },
+  statics: {
+    trigger:['blur', 'click', 'change'],
+    _store:{},
+    find:function(objId){
+      return JX.Validate._store[objId];
+    },
+  },
+  properties: {
+    element:null,
+    validationFn:null
+  }
+});
+
+/**
  * Form Plugin
  *
  * @group Plugin
@@ -67,6 +129,18 @@ JX.install('Form', {
   properties: {
     uri:null,
     validationFns:null
+  }
+});
+
+JX.behavior('form-field', function(config, statics) {
+  try{
+    var selector = document.querySelector(config.selector);
+    var obj = new JX.Validate(selector,config.validationFn);
+    obj.listen('done', config.onDone);
+    obj.listen('fail', config.onFail);
+  }
+  catch(e){
+    JX.$E('\'selector\' ' + config.selector + ' is not a valid DOM Node selector' + e);
   }
 });
 
