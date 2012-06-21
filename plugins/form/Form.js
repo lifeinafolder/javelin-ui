@@ -9,7 +9,6 @@
  * @group Plugin
  */
 JX.install('Validate', {
-  extend: 'Memoize',
   construct: function(node, validationFn, config){
     if (__DEV__) {
       if (!node) {
@@ -29,18 +28,15 @@ JX.install('Validate', {
     this.setTrigger(config.trigger || 'blur');
     JX.Stratcom.addData(node, { _objId: this.__id__});
     JX.Validate._store[this.__id__] = this;
-    JX.Memoize.call(this);
 
-    JX.DOM.listen(node, ['focus','blur','change'], 'form-field', function(e){
+    JX.DOM.listen(node, ['focus','blur','change'], 'form-field', JX.bind(this,function(e){
       var data = e.getNodeData('form-field');
       var target = e.getTarget();
 
-      var obj = JX.Memoize.find(data._cacheId);
-      //console.log(obj.__id__);
-      if (obj && (target === obj.getElement()) && (e.getType() === obj.getTrigger())){
-        obj.validate();
+      if (e.getType() === this.getTrigger()){
+        this.validate();
       }
-    });
+    }));
   },
   events: ['start','done'],
   members: {
