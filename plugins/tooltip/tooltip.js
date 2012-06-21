@@ -23,8 +23,6 @@ JX.install('Tooltip', {
     this.setElement(node);
     this.setTrigger(config.trigger);
     this.setPosition(config.position);
-
-    JX.Memoize.call(this);
   },
   members: {
     present:false,
@@ -85,8 +83,7 @@ JX.install('Tooltip', {
     element:null,
     trigger:null,
     position:null,
-  },
-  extend:'Memoize'
+  }
 });
 
 JX.behavior('show-tooltip', function(config, statics) {
@@ -110,6 +107,7 @@ JX.behavior('show-tooltip', function(config, statics) {
     else {
       //console.log('creating object');
       var obj = new JX.Tooltip(node, data);
+      JX.Memoize.add(obj);
     }
 
     if (obj && !obj.getTrigger() ||
