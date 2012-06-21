@@ -90,9 +90,15 @@ JX.install('Tooltip', {
 });
 
 JX.behavior('show-tooltip', function(config, statics) {
-  var map = {};
   JX.Stratcom.listen(['mouseover','focus','mouseout','blur'], 'tooltip', JX.bind(this,function(e){
     var data = e.getNodeData('tooltip');
+
+    var isEventActionable = !data.trigger ||
+      (data.trigger === 'hover' && ['mouseover','mouseout'].indexOf(e.getType()) > -1) ||
+      (data.trigger === 'focus' && ['focus','blur'].indexOf(e.getType()) > -1);
+
+    if(!isEventActionable) return;
+
     var node = e.getTarget();
 
     var cachedObj = JX.Memoize.find(data._cacheId);
@@ -102,18 +108,18 @@ JX.behavior('show-tooltip', function(config, statics) {
       var obj = cachedObj;
     }
     else {
-      //console.log('not cached');
+      //console.log('creating object');
       var obj = new JX.Tooltip(node, data);
     }
 
-    if (!obj.getTrigger() ||
+    if (obj && !obj.getTrigger() ||
         (obj.getTrigger() === 'hover' && e.getType() === 'mouseover') ||
         (obj.getTrigger() === 'focus' && e.getType() === 'focus')
       ){
       obj.show();
     }
 
-    if (!obj.getTrigger() ||
+    if (obj && !obj.getTrigger() ||
         (obj.getTrigger() === 'hover' && e.getType() === 'mouseout') ||
         (obj.getTrigger() === 'focus' && e.getType() === 'blur')
       ){
