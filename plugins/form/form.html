@@ -56,6 +56,18 @@
 
     JX.initBehaviors({
       'form-field' : [
+        // {
+        //   selector: <Required> DOM selector of the form field,
+        //   validationFn: <Required> Function to use to validate this field:
+        //                  function(node, cbk){}
+        //                    @param {DOMElement} node - DOM node being validated
+        //                    @param {Function} cbk - callback function being returned <boolean> result of //                                             validation
+        //   onDone: <Optional> Function that is invoked once validation process is completed
+        //            function(res){}
+        //              @param {Boolean} res - result of the validation (true/false)
+        //   trigger: <Optional> {String} One of these events ['focus','blur','change'] (Default: blur) to
+        //            trigger validation
+        // },
         {
           selector:'#firstName',
           validationFn: function(node, cbk){
@@ -64,7 +76,7 @@
           },
           onDone:function(res){
             console.log('validated firstName:', res);
-          },
+          }
         },
         {
           selector:'#lastName',
