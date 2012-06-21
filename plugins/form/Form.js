@@ -75,10 +75,10 @@ JX.install('Form', {
     this.setUri(uri);
     this.setValidationFns(validationFns);
   },
-  events:['start','done','fail','invalid','valid'], // TODO: invoke 'fail'
+  events:['start','done','fail','invalid'], // TODO: invoke 'fail'
   members: {
     _cbk: function(response){
-      this.invoke('done',{a:5});
+      this.invoke('done', response);
     },
     validate: function(){
       validationFns = this.getValidationFns();
@@ -86,44 +86,46 @@ JX.install('Form', {
       var validationsLeft = validationFns.length;
 
       // In the case where there are no validtion fns.
-      if (!validationsLeft-- && isFormValid){
+      if (!validationsLeft && isFormValid){
         this.invoke('valid');
         return;
       }
 
-      // Try validating the form now that we have validation fns
-      var isFormValidated = false;
+      // Did the form validation fail?
+      var formValidationfailed = false;
 
       for(var i=0, il = validationFns.length; i < il; i++){
         var fn = validationFns[i];
 
         //execute a validation fn
-        fn(function(result){
+        fn(JX.bind(this, function(result){
+          validationsLeft--;
+
           //dont invoke multiple 'invalid' events
           // but invoke 'invalid' event the moment any validation fails
-          do {
-            isFormValid = isFormValid && result;
-            if (!isFormValid){
-              this.invoke('invalid');
-              isFormValidated = true;
-            }
-          } while (!isFormValidated);
-
-          if (!validationsLeft-- && isFormValid){
-            this.invoke('valid');
+          isFormValid = isFormValid && result;
+          if (!isFormValid && !formValidationfailed){
+            formValidationfailed = true;
+            this.invoke('invalid');
+            return;
           }
-        });
 
+
+          // If no more validation fns are left to operate and form is still valid, post
+          if (!validationsLeft && isFormValid){
+            this.post();
+          }
+        }));
       }
     },
     submit: function(){
       this.invoke('start');
       this.validate();
-      this.listen('valid', JX.bind(this,function(){
-        var r = new JX.Request(this.getUri(), JX.bind(this,this._cbk));
-        r.setData();
-        r.send();
-      }));
+    },
+    post:function(){
+      var r = new JX.Request(this.getUri(), JX.bind(this,this._cbk));
+      r.setData();
+      r.send();
     }
   },
   properties: {
@@ -151,7 +153,17 @@ JX.behavior('form', function(config, statics) {
     var data = e.getNodeData('form');
     var target = e.getTarget();
     var action = target.getAttribute('action');
-    var validationFns = data.validationFns;
+
+    var validationFns = [];
+
+    ['INPUT','TEXTAREA','SELECT'].forEach(function(formField){
+      var fields = JX.DOM.scry(target,formField);
+      for(var i=fields.length; i--;){
+        var id = JX.Stratcom.getData(fields[i])._objId;
+        var obj = id && JX.Validate.find(id);
+        obj && obj.getValidationFn() && validationFns.push(obj.getValidationFn());
+      }
+    });
 
     var f = new JX.Form(action, validationFns);
 
