@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <title>Javelin Example: Simple</title>
-    <script src="../../javelin/pkg/init.min.js" type="text/javascript"></script>
+    <script>
+      var __DEV__ = 1;
+    </script>
+    <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="../default.css">
     <link rel="stylesheet" type="text/css" href="form.css">
     <style type="text/css">
@@ -27,30 +30,52 @@
   </head>
   <body>
     <form data-sigil="form" data-meta="0_0" action="/plugins/button/backend.php">
-      <label>First Name: <input type="text" placeholder="Your First Name"/></label>
-      <label>Last Name: <input type="text" placeholder="Your Second Name"/></label>
-      <label>Age: <input type="number" placeholder="Your Age"/></label>
+      <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Your First Name"/></label>
+      <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Your Second Name"/></label>
+      <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
       <input type="submit" data-sigil="form-submit" value="submit"/>
     </form>
   </body>
-  <script>
-    var __DEV__ = 1;
-  </script>
   <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+  <script src="../Memoize.js" type="text/javascript"></script>
   <script src="Form.js" type="text/javascript"></script>
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, [
       {
         onDone: function(response){
-          console.log('form submitted',response);
+          console.log('form submitted', response);
         },
         onValidationFail: function(response){
-
+          console.log('validation failed');
         }
       }
     ]);
 
     JX.initBehaviors({
+      'form-field' : [
+        {
+          selector:'#firstName',
+          validationFn: function(node, cbk){
+            console.log('validating firstName...');
+            cbk && cbk(node.value.toLowerCase() === 'tom');
+          },
+          onDone:function(res){
+            console.log('validated firstName:', res);
+          },
+        },
+        {
+          selector:'#lastName',
+          validationFn: function(node, cbk){
+            console.log('validating lastName...');
+            setTimeout(function(){
+              cbk && cbk(node.value.toLowerCase() === 'sawyer');
+            }, 5000);
+          },
+          onDone:function(res){
+            console.log('validated lastName:', res);
+          }
+        }
+      ],
       'form' : []
     });
   </script>

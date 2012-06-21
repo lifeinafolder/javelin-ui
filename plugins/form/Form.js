@@ -56,7 +56,8 @@ JX.install('Validate', {
   },
   properties: {
     element:null,
-    validationFn:null
+    validationFn:null,
+    trigger:null
   }
 });
 
@@ -66,19 +67,19 @@ JX.install('Validate', {
  * @group Plugin
  */
 JX.install('Form', {
-  construct: function(uri, validationFns){
+  construct: function(uri, validationObjs){
     this.setUri(uri);
-    this.setValidationFns(validationFns);
+    this.setValidationFns(validationObjs);
   },
-  events:['start','done','fail','invalid'], // TODO: invoke 'fail'
+  events:['start','done','fail','invalid','valid'], // TODO: invoke 'fail'
   members: {
     _cbk: function(response){
       this.invoke('done', response);
     },
     validate: function(){
-      validationFns = this.getValidationFns();
+      var validationObjs = this.getValidationFns();
       var isFormValid = true; // Assumption
-      var validationsLeft = validationFns.length;
+      var validationsLeft = validationObjs.length;
 
       // In the case where there are no validtion fns.
       if (!validationsLeft && isFormValid){
@@ -89,11 +90,12 @@ JX.install('Form', {
       // Did the form validation fail?
       var formValidationfailed = false;
 
-      for(var i=0, il = validationFns.length; i < il; i++){
-        var fn = validationFns[i];
+      for(var i=0, il = validationObjs.length; i < il; i++){
+        var fn = validationObjs[i].getValidationFn();
+        var node = validationObjs[i].getElement();
 
         //execute a validation fn
-        fn(JX.bind(this, function(result){
+        fn(node, JX.bind(this, function(result){
           validationsLeft--;
 
           //dont invoke multiple 'invalid' events
@@ -118,6 +120,7 @@ JX.install('Form', {
       this.validate();
     },
     post:function(){
+      this.invoke('valid');
       var r = new JX.Request(this.getUri(), JX.bind(this,this._cbk));
       r.setData();
       r.send();
@@ -132,9 +135,12 @@ JX.install('Form', {
 JX.behavior('form-field', function(config, statics) {
   try{
     var selector = document.querySelector(config.selector);
-    var obj = new JX.Validate(selector,config.validationFn);
+    delete config.selector;
+    var validationFn = config.validationFn;
+    delete config.validationFn;
+
+    var obj = new JX.Validate(selector,validationFn, config);
     obj.listen('done', config.onDone);
-    obj.listen('fail', config.onFail);
   }
   catch(e){
     JX.$E('\'selector\' ' + config.selector + ' is not a valid DOM Node selector' + e);
@@ -149,18 +155,18 @@ JX.behavior('form', function(config, statics) {
     var target = e.getTarget();
     var action = target.getAttribute('action');
 
-    var validationFns = [];
+    var validationObjs = [];
 
     ['INPUT','TEXTAREA','SELECT'].forEach(function(formField){
       var fields = JX.DOM.scry(target,formField);
       for(var i=fields.length; i--;){
         var id = JX.Stratcom.getData(fields[i])._objId;
         var obj = id && JX.Validate.find(id);
-        obj && obj.getValidationFn() && validationFns.push(obj.getValidationFn());
+        obj && validationObjs.push(obj);
       }
     });
 
-    var f = new JX.Form(action, validationFns);
+    var f = new JX.Form(action, validationObjs);
 
     f.listen('done',data.onDone);
     f.listen('invalid', data.onValidationFail);
