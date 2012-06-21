@@ -10,7 +10,7 @@
  */
 JX.install('Validate', {
   extend: 'Memoize',
-  construct: function(node, validationFn){
+  construct: function(node, validationFn, config){
     if (__DEV__) {
       if (!node) {
         JX.$E(
@@ -26,7 +26,7 @@ JX.install('Validate', {
 
     this.setElement(node);
     this.setValidationFn(validationFn);
-
+    this.setTrigger(config.trigger || 'blur');
     JX.Stratcom.addData(node, { _objId: this.__id__});
     JX.Validate._store[this.__id__] = this;
     JX.Memoize.call(this);
@@ -34,21 +34,20 @@ JX.install('Validate', {
     JX.DOM.listen(node, ['focus','blur','change'], 'form-field', function(e){
       var data = e.getNodeData('form-field');
       var target = e.getTarget();
-      var trigger = data.trigger || 'blur';
 
       var obj = JX.Memoize.find(data._cacheId);
       //console.log(obj.__id__);
-      if (obj && (target === obj.getElement()) && (e.getType() === trigger)){
+      if (obj && (target === obj.getElement()) && (e.getType() === obj.getTrigger())){
         obj.validate();
       }
     });
   },
-  events: ['start','done','fail'],
+  events: ['start','done'],
   members: {
     validate: function(){
       this.invoke('start');
-      (this.getValidationFn())(JX.bind(this,function(response){
-        this.invoke( response ? 'done' : 'fail');
+      (this.getValidationFn())(this.getElement(), JX.bind(this, function(response){
+        this.invoke('done', response);  // The response by the validation fn is proxied to 'done' callback
       }));
     }
   },
