@@ -26,6 +26,16 @@
         display: block;
         padding:10px;
       }
+
+      .error
+      {
+        color: red;
+      }
+
+      .pass
+      {
+        color:green;
+      }
     </style>
   </head>
   <body>
@@ -33,6 +43,7 @@
       <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Your First Name"/></label>
       <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Your Second Name"/></label>
       <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
+      <span id="msg"></span>
       <input type="submit" data-sigil="form-submit" value="submit"/>
     </form>
   </body>
@@ -42,13 +53,20 @@
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, [
       {
+        onStart:function(){
+          JX.DOM.setContent(JX.$('msg'), 'Validating...');
+        },
         onDone: function(response){
           console.log('form submitted', response);
         },
         onValidationFail: function(){
+          var msg = JX.$N('div',{className:'error'},'Validation Failed');
+          JX.DOM.setContent(JX.$('msg'), msg);
           console.log('validation failed');
         },
         onValidationDone: function(){
+          var msg = JX.$N('div',{className:'pass'},'Validation Passed');
+          JX.DOM.setContent(JX.$('msg'), msg);
           console.log('validation succeeded');
         }
       }
