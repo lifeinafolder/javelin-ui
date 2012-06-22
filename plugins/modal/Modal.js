@@ -26,9 +26,12 @@ JX.install('Modal', {
     //   this.hide();
     // }));
 
-    JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
-      this.hide();
-    }));
+    // If lock == true, then dont hide it on click on background
+    if(!config.lock){
+      JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
+        this.hide();
+      }));
+    }
 
     //Show the 'Modal'
     this.show();
