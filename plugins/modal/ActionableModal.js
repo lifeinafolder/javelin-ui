@@ -26,6 +26,12 @@ JX.install('ActionModal', {
     this.setActionTitle(config.actionTitle || 'Ok');
     this.setAction(action);
     this.prepare();
+
+    JX.Keyboard.listen('modal-submit', JX.bind(this,function(e){
+      if (JX.Keyboard.is(e, JX.Keyboard.keys.ENTER)){
+        (this.getAction())();
+      }
+    }));
   },
   members: {
     prepare: function() {
@@ -42,8 +48,8 @@ JX.install('ActionModal', {
         flag && this.hide();
       });
 
-      var actionFn = JX.bind(this.getContent(), this.getAction(), cbk);
-      JX.DOM.listen(action, 'click', null, actionFn);
+      this.setAction(JX.bind(this.getContent(), this.getAction(), cbk));
+      JX.DOM.listen(action, 'click', null, this.getAction());
     }
   },
   statics: {
