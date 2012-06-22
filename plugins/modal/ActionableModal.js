@@ -27,7 +27,7 @@ JX.install('ActionModal', {
     this.setAction(action);
     this.prepare();
 
-    JX.Keyboard.listen('modal-submit', JX.bind(this,function(e){
+    JX.Keyboard.listen(null, JX.bind(this,function(e){
       if (JX.Keyboard.is(e, JX.Keyboard.keys.ENTER)){
         (this.getAction())();
       }
