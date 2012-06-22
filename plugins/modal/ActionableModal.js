@@ -25,7 +25,15 @@ JX.install('ActionModal', {
       footer.appendChild(action);
       footer.appendChild(cancel);
       JX.DOM.listen(cancel,'click',null, JX.bind(this, this.hide));
-      JX.DOM.listen(action,'click',null, JX.bind(this, this.getAction()));
+
+      // Callback that the actionable fn must invoke to tell the ActionableModal
+      // to hide the modal or not.
+      var cbk = JX.bind(this, function(flag){
+        flag && this.hide();
+      });
+
+      var actionFn = JX.bind(this.getContent(), this.getAction(), cbk);
+      JX.DOM.listen(action, 'click', null, actionFn);
     }
   },
   statics: {
