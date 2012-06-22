@@ -22,9 +22,9 @@ JX.install('Modal', {
     // Set 'Modal' source
     this.setContent(source);
 
-    JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
-      this.hide();
-    }));
+    // JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
+    //   this.hide();
+    // }));
 
     JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
       this.hide();
@@ -38,15 +38,14 @@ JX.install('Modal', {
     _modalBg:null,
     show : function() {
       if (!this._depth) {
-        
         var _modalBg = JX.$N('div',{className : 'jx-modal-bg'});
         var _modal = JX.$N('div', {className: 'jx-modal'});
-        var _close = JX.$N('div',{className: 'jx-modal-close',},'X');
+        //var _close = JX.$N('div',{className: 'jx-modal-close',},'X');
 
-        JX.Stratcom.addSigil(_close, 'modal-close');
+        //JX.Stratcom.addSigil(_close, 'modal-close');
         JX.Stratcom.addSigil(_modalBg, 'modal-bg');
 
-        _modal.appendChild(_close);
+        //_modal.appendChild(_close);
         document.body.appendChild(_modalBg);
         this._modalBg = _modalBg;
 
@@ -86,7 +85,7 @@ JX.behavior('show-modal', function(config, statics) {
     var isDomNode = document.querySelector(source);
     var modal = new JX.Modal(isDomNode, config);
   }
-  catch(e){
+  catch(e) {
     if (source.search(/https?:\/\//gi) === 0){ // Is it a remote URI ?
       var r = new JX.Request(source, function(response){
         var modal = new JX.Modal(response, config);
