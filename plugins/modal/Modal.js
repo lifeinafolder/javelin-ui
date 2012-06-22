@@ -31,6 +31,12 @@ JX.install('Modal', {
       JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
         this.hide();
       }));
+
+      JX.Keyboard.listen(null, JX.bind(this,function(e){
+        if (JX.Keyboard.is(e, JX.Keyboard.keys.ESC)){
+          this.hide();
+        }
+      }));
     }
 
     //Show the 'Modal'
