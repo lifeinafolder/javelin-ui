@@ -42,6 +42,7 @@ JX.install('Modal', {
     //Show the 'Modal'
     this.show();
   },
+  events:['hide','show'],
   members: {
     _depth: 0,
     _modalBg:null,
@@ -67,6 +68,7 @@ JX.install('Modal', {
         JX.FX.fade(this.getMask(),1,500);
       }
       ++this._depth;
+      this.invoke('show');
     },
     hide : function() {
       --this._depth;
@@ -77,6 +79,7 @@ JX.install('Modal', {
           this.setMask(null);
         }
       }));
+      this.invoke('hide');
     }
   },
   properties: {
@@ -106,4 +109,7 @@ JX.behavior('show-modal', function(config, statics) {
       var modal = new JX.Modal(source, config);
     }
   }
+
+  modal.listen('show',config.onShow);
+  modal.listen('hide',config.onHide);
 });
