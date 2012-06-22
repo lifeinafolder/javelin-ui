@@ -1,3 +1,13 @@
+/**
+ * @requires javelin-install javelin-dom javelin-fx javelin-modal
+ * @javelin
+ */
+
+/**
+ * Action Modal Plugin
+ *
+ * @group Plugin
+ */
 JX.install('ActionModal', {
   extend:'Modal',
   construct: function(node, action, config) {
@@ -7,8 +17,8 @@ JX.install('ActionModal', {
     if (__DEV__) {
       if (!action) {
         JX.$E(
-          'new JX.ActionableModal(node, <?>, ...): '+
-          '\'action\' is required for ActionableModal to operate' );
+          'new JX.ActionModal(node, <?>, ...): '+
+          '\'action\' is required for Action Modal to operate' );
       }
     }
 
@@ -79,7 +89,7 @@ JX.behavior('actionable-modal', function(config, statics) {
       r.send();
     }
     else {
-      console.log( e ? e.message : 'Need DOM node to build an ActionableModal');
+      console.log( e ? e.message : 'Need DOM node to build an Action Modal');
     }
   }
 });
