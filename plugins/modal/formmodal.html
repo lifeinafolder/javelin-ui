@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Javelin Example: Simple</title>
+    <script>
+      var __DEV__ = 1;
+    </script>
+    <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../default.css">
+    <link rel="stylesheet" type="text/css" href="modal.css">
+    <style type="text/css">
+      form label
+      {
+        display: block;
+        padding:10px;
+      }
+
+      .error
+      {
+        color: red;
+      }
+
+      .pass
+      {
+        color:green;
+      }
+    </style>
+  </head>
+  <body>
+    <!--     MANDATORY MARKUP for ACTIONABLE MODAL
+      <div id="Selector">
+        <div data-sigil="modal-header"></div>
+        <div data-sigil="modal-body"></div>
+        <div data-sigil="modal-footer"></div>
+      </div>
+    -->
+    <div id="test">
+      <div data-sigil="modal-header" class="modal-header">
+        <h3><strong>Message</strong></h3>
+      </div>
+      <form data-sigil="form" data-meta="0_0" action="/plugins/button/backend.php">
+        <div data-sigil="modal-body" class="modal-body">
+          <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Your First Name"/></label>
+          <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Your Second Name"/></label>
+          <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
+          <span id="msg"></span>
+        </div>
+        <hr>
+        <div data-sigil="modal-footer">
+          <input type="submit" data-sigil="form-submit" value="submit"/>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+  <script src="../keyboard.js" type="text/javascript"></script>
+  <script src="Modal.js" type="text/javascript"></script>
+  <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
+  <script src="../form/Form.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    JX.Stratcom.mergeData(0, [
+      {
+        onStart:function(){
+          JX.DOM.setContent(JX.$('msg'), 'Validating...');
+        },
+        onDone: function(response){
+          console.log('form submitted', response);
+          myFormModal.hide();
+        },
+        onValidationFail: function(){
+          var msg = JX.$N('div',{className:'error'},'Validation Failed');
+          JX.DOM.setContent(JX.$('msg'), msg);
+          console.log('validation failed');
+        },
+        onValidationDone: function(){
+          var msg = JX.$N('div',{className:'pass'},'Validation Passed');
+          JX.DOM.setContent(JX.$('msg'), msg);
+          console.log('validation succeeded');
+        }
+      }
+    ]);
+
+    JX.initBehaviors({
+      'form-field' : [
+        // {
+        //   selector: <Required> DOM selector of the form field,
+        //   validationFn: <Required> Function to use to validate this field:
+        //                  function(node, cbk){}
+        //                    @param {DOMElement} node - DOM node being validated
+        //                    @param {Function} cbk - callback function being returned <boolean> result of //                                             validation
+        //   onDone: <Optional> Function that is invoked once validation process is completed
+        //            function(res){}
+        //              @param {Boolean} res - result of the validation (true/false)
+        //   trigger: <Optional> {String} One of these events ['focus','blur','change'] (Default: blur) to
+        //            trigger validation
+        // },
+        {
+          selector:'#firstName',
+          validationFn: function(node, cbk){
+            console.log('validating firstName...');
+            cbk && cbk(node.value.toLowerCase() === 'tom');
+          },
+          onDone:function(res){
+            console.log('validated firstName:', res);
+          }
+        },
+        {
+          selector:'#lastName',
+          validationFn: function(node, cbk){
+            console.log('validating lastName...');
+            setTimeout(function(){
+              cbk && cbk(node.value.toLowerCase() === 'sawyer');
+            }, 5000);
+          },
+          onDone:function(res){
+            console.log('validated lastName:', res);
+          }
+        }
+      ],
+      'form' : []
+    });
+
+    var myFormModal = new JX.Modal(JX.$('test'),{lock:true});
+  </script>
+</html>
