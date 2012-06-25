@@ -1286,7 +1286,7 @@ JX.install('Tokenizer', {
         name: this._orig.name + '[' + (this._seq++) + ']'
       });
 
-      var remove = JX.$N('a', {
+      var remove = JX.$N('sup', {
         className: 'jx-tokenizer-x',
         sigil: 'remove'
       }, '\u00d7'); // U+00D7 multiplication sign
