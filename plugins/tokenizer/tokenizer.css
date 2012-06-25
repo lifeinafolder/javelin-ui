@@ -49,3 +49,8 @@ input.jx-typeahead-placeholder {
   cursor:pointer;
   margin-left: 5px;
 }
+
+.jx-tokenizer-x:hover
+{
+  background:black;
+}
