@@ -40,6 +40,8 @@ input.jx-typeahead-placeholder {
   font-size:14px;
   padding:5px;
   margin-right: 5px;
+  display: inline-block;
+  margin-bottom:5px;
 }
 
 .jx-tokenizer-x
