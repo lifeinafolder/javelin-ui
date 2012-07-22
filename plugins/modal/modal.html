@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Javelin Example: Simple</title>
+    <title>Javelin Example: Modals</title>
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../../css/prettify.css">
     <link rel="stylesheet" type="text/css" href="modal.css">
@@ -90,7 +90,7 @@
           <h1>Modal</h1>
           <p>Modal plugin allows you to draw user attention to your system messages.</p>
           <h2>Required Includes</h2>
-          <pre class="prettyprint">
+          <pre class="prettyprint linenums">
 &lt;script src="plugins/keyboard.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="javelin/src/ext/fx/FX.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/modal/Modal.js" type="text/javascript"&gt;&lt;/script&gt;
@@ -126,13 +126,14 @@ JX.initBehaviors({
           <h1>Actionable Modal</h1>
           <p>Actionable Modal plugin allows you to lock your UI to enforce a user action.</p>
           <h2>Required Includes</h2>
-          <pre class="prettyprint">
+          <pre class="prettyprint linenums">
 &lt;script src="plugins/keyboard.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="javelin/src/ext/fx/FX.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/modal/Modal.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="plugins/modal/ActionableModal.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/modal/modal.css"/&gt;</pre>
           <h2>Required Markup</h2>
-          <pre class="prettyprint">
+          <pre class="prettyprint linenums">
 &lt;div id="my-actionable-modal"&gt;
   &lt;div data-sigil="modal-header"&gt;&lt;/div&gt;
   &lt;div data-sigil="modal-body"&gt;&lt;/div&gt;
@@ -144,7 +145,11 @@ JX.Stratcom.mergeData(0, {});
 
 JX.initBehaviors({
   'actionable-modal' : [{source : "#my-actionable-modal", action: function(cbk){
-    console.log('Do something with this modal:', this);
+    /**
+     * This function gets invoked if the user says 'ok' to the modal action.
+     * You need to call 'cbk' function with a boolean indicating whether
+     * you want the 'Actionable Modal' to hide now or keep showing.
+     */
     cbk && cbk(true);
   }}]
 });</pre>
@@ -160,7 +165,6 @@ JX.initBehaviors({
               <hr>
               <div data-sigil="modal-footer"></div>
             </div>
-          </div>
           </div>
           <div class="btn btn-large btn-primary" onclick="modalAction();">Try Actionable Modal</div>
         </div>
