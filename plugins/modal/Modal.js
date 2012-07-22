@@ -39,38 +39,40 @@ JX.install('Modal', {
     }
 
     //Show the 'Modal'
-    this.show(source);
+    this.init(source);
   },
   events:['hide','show'],
   members: {
     _depth: 0,
     _modalBg:null,
-    show : function(source) {
+    init: function(source){
+      var _modalBg = JX.$N('div',{className : 'jx-modal-bg'});
+      var _modal = JX.$N('div', {className: 'jx-modal'});
+      //var _close = JX.$N('div',{className: 'jx-modal-close',},'X');
+
+      //JX.Stratcom.addSigil(_close, 'modal-close');
+      JX.Stratcom.addSigil(_modalBg, 'modal-bg');
+
+      //_modal.appendChild(_close);
+      this._modalBg = _modalBg;
+
+      // Clone user markup
+      try{
+        var content = source.cloneNode(true);
+      }
+      catch(e){
+        content = source; // If the user has given a string instead of DOM Node.
+      }
+
+      this.setContent(content);
+
+      JX.DOM.appendContent(_modal, content || '');
+
+      this.setMask(_modal);
+    },
+    show : function() {
       if (!this._depth) {
-        var _modalBg = JX.$N('div',{className : 'jx-modal-bg'});
-        var _modal = JX.$N('div', {className: 'jx-modal'});
-        //var _close = JX.$N('div',{className: 'jx-modal-close',},'X');
-
-        //JX.Stratcom.addSigil(_close, 'modal-close');
-        JX.Stratcom.addSigil(_modalBg, 'modal-bg');
-
-        //_modal.appendChild(_close);
-        document.body.appendChild(_modalBg);
-        this._modalBg = _modalBg;
-
-        // Clone user markup
-        try{
-          var content = source.cloneNode(true);
-        }
-        catch(e){
-          content = source; // If the user has given a string instead of DOM Node.
-        }
-
-        this.setContent(content);
-
-        JX.DOM.appendContent(_modal, content || '');
-
-        this.setMask(_modal);
+        document.body.appendChild(this._modalBg);
         document.body.appendChild(this.getMask());
 
         JX.FX.fade(this.getMask(),1,500);
@@ -119,4 +121,5 @@ JX.behavior('show-modal', function(config, statics) {
 
   modal.listen('show',config.onShow);
   modal.listen('hide',config.onHide);
+  modal.show();
 });
