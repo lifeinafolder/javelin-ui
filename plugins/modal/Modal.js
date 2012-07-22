@@ -59,7 +59,13 @@ JX.install('Modal', {
         this._modalBg = _modalBg;
 
         // Clone user markup
-        var content = source.cloneNode(true);
+        try{
+          var content = source.cloneNode(true);
+        }
+        catch(e){
+          content = source; // If the user has given a string instead of DOM Node.
+        }
+
         this.setContent(content);
 
         JX.DOM.appendContent(_modal, content || '');
