@@ -98,4 +98,5 @@ JX.behavior('actionable-modal', function(config, statics) {
       console.log( e ? e.message : 'Need DOM node to build an Action Modal');
     }
   }
+  modal.show();
 });
