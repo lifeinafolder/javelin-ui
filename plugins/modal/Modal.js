@@ -83,7 +83,6 @@ JX.install('Modal', {
           this.setMask(null);
         }
       }));
-      this.invoke('hide');
     }
   },
   properties: {
