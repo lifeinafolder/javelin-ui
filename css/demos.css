@@ -1,0 +1,44 @@
+html, body
+{
+  background-color: #EEE;
+}
+
+.container
+{
+  margin: 0 auto;
+}
+
+.content
+{
+  background-color: white;
+  padding: 20px;
+  margin: 0 -20px;
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+}
+
+hr
+{
+  border-top:1px solid #CCC;
+}
+
+h2
+{
+  font-size: 16px;
+}
+
+pre.prettyprint
+{
+  padding: 8px;
+  background-color: #F7F7F9;
+  border: 1px solid #E1E1E8;
+}
+
+.linenums li
+{
+  list-style-type: inherit;
+}
