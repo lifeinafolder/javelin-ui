@@ -21,7 +21,6 @@ JX.install('Modal', {
 
     // Set 'Modal' source
     this.setContent(source);
-
     // JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
     //   this.hide();
     // }));
@@ -30,11 +29,13 @@ JX.install('Modal', {
     if(!config.lock){
       JX.Stratcom.listen('click', 'modal-bg', JX.bind(this,function(e) {
         this.hide();
+        JX.Stratcom.removeCurrentListener();
       }));
 
       JX.Keyboard.listen(null, JX.bind(this,function(e){
         if (JX.Keyboard.is(e, JX.Keyboard.keys.ESC)){
           this.hide();
+          JX.Stratcom.removeCurrentListener();
         }
       }));
     }
