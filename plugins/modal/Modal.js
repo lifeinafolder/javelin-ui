@@ -60,8 +60,11 @@ JX.install('Modal', {
         document.body.appendChild(_modalBg);
         this._modalBg = _modalBg;
 
+        // Clone user markup
+        var content = this.getContent().cloneNode(true);
+        content.style.display = '';
 
-        JX.DOM.appendContent(_modal,this.getContent() || '');
+        JX.DOM.appendContent(_modal, content || '');
 
         this.setMask(_modal);
         document.body.appendChild(this.getMask());
@@ -96,7 +99,6 @@ JX.behavior('show-modal', function(config, statics) {
 
   try { // Is it a DOM node?
     var isDomNode = document.querySelector(source);
-    isDomNode.style.display = '';
     var modal = new JX.Modal(isDomNode, config);
   }
   catch(e) {
