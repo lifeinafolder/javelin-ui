@@ -2,35 +2,73 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Javelin Example: Simple</title>
+    <title>Javelin Example: Modals</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettify.css">
+    <link rel="stylesheet" type="text/css" href="tooltip.css">
+   <link rel="stylesheet" type="text/css" href="../../css/demos.css">
     <script>
       var __DEV__ = 1;
     </script>
     <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../default.css">
-    <link rel="stylesheet" type="text/css" href="tooltip.css">
-  </head>
-  <body>
-    <p id="test" data-meta="0_0" data-sigil="tooltip" title="test title" style="margin-top:200px;">This is a simple example showcasing the Tooltip plugin.</p>
-    <input id="test2" data-meta="0_1" data-sigil="tooltip" title="input type" type="text" style="margin-left:50%; margin-top:300px"/>
-  </body>
-  <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
-  <script src="../Memoize.js" type="text/javascript"></script>
-  <script src="Tooltip.js" type="text/javascript"></script>
-  <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    JX.Stratcom.mergeData(0, [
-      {
-        trigger: 'hover'
-      },
-      {
-        trigger:'focus',
-        position:'right'
-      }
-    ]);
+    <script type="text/javascript" src="../../js/prettify.js"></script>
+    <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+    <script src="../Memoize.js" type="text/javascript"></script>
+    <script src="Tooltip.js" type="text/javascript"></script>
+    <script src="../../javelin/src/ext/fx/FX.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      JX.Stratcom.mergeData(0, [
+        {
+          trigger: 'hover'
+        },
+        {
+          trigger:'focus',
+          position:'right'
+        }
+      ]);
 
-    JX.initBehaviors({
-      'show-tooltip' : []
-    });
-  </script>
+      JX.initBehaviors({
+        'show-tooltip' : []
+      });
+    </script>
+  </head>
+  <body onLoad='prettyPrint()'>
+    <div class="container">
+      <div class="content">
+        <div class="plugin">
+          <h1>Tooltip</h1>
+          <h2>Required Includes</h2>
+          <pre class="prettyprint linenums">
+&lt;script src="../memoize.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="plugins/tooltip/tooltip.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="plugins/tooltip/tooltip.css"/&gt;</pre>
+          <h2>Required Markup</h2>
+          <pre class="prettyprint linenums">
+&lt;p data-meta="0_0" data-sigil="tooltip" title="test title"&gt;Dom element must have:
+  &lt;ol&gt;
+    &lt;li&gt; A data-sigil attribute of 'tooltip'
+    &lt;ol&gt; A title attribute for tooltip text
+    &lt;ol&gt; A data-meta attribute indicating position of config options in mergeData map
+  &lt;/ol&gt;
+&lt;/p&gt;</pre>
+          <h2>Code</h2>
+          <pre class="prettyprint linenums">
+JX.Stratcom.mergeData(0, [
+  {
+    trigger: 'hover'  // Config options for Example 1
+  },
+  {
+    trigger:'focus',  // Config options for Example 2
+    position:'right'
+  }
+]);
+
+JX.initBehaviors({
+  'show-tooltip' : []
+});</pre>
+          <h2>Example 1</h2>
+    <p data-meta="0_0" data-sigil="tooltip" title="test title" style="display:inline;">This is a simple example showcasing the Tooltip plugin.</p>
+    <h2>Example 2</h2>
+    <input data-meta="0_1" data-sigil="tooltip" title="input type" type="text"/>
+  </body>
 </html>
