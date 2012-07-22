@@ -95,6 +95,7 @@ JX.behavior('show-modal', function(config, statics) {
 
   try { // Is it a DOM node?
     var isDomNode = document.querySelector(source);
+    isDomNode.style.display = '';
     var modal = new JX.Modal(isDomNode, config);
   }
   catch(e) {
