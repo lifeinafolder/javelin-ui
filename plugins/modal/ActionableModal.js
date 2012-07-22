@@ -60,7 +60,7 @@ JX.install('ActionModal', {
         return true;
       }
       catch(e) {
-        console.log('No modal-header or modal-footer found:', e);
+        JX.$E('No modal-header or modal-footer found in the markup');
       }
       return false;
     }
