@@ -62,7 +62,6 @@ JX.install('Modal', {
 
         // Clone user markup
         var content = this.getContent().cloneNode(true);
-        content.style.display = '';
 
         JX.DOM.appendContent(_modal, content || '');
 
