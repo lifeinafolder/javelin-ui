@@ -19,8 +19,6 @@ JX.install('Modal', {
       }
     }
 
-    // Set 'Modal' source
-    this.setContent(source);
     // JX.Stratcom.listen('click', 'modal-close', JX.bind(this,function(e) {
     //   this.hide();
     // }));
@@ -41,13 +39,13 @@ JX.install('Modal', {
     }
 
     //Show the 'Modal'
-    this.show();
+    this.show(source);
   },
   events:['hide','show'],
   members: {
     _depth: 0,
     _modalBg:null,
-    show : function() {
+    show : function(source) {
       if (!this._depth) {
         var _modalBg = JX.$N('div',{className : 'jx-modal-bg'});
         var _modal = JX.$N('div', {className: 'jx-modal'});
@@ -61,7 +59,8 @@ JX.install('Modal', {
         this._modalBg = _modalBg;
 
         // Clone user markup
-        var content = this.getContent().cloneNode(true);
+        var content = source.cloneNode(true);
+        this.setContent(content);
 
         JX.DOM.appendContent(_modal, content || '');
 
