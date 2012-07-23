@@ -35,10 +35,12 @@ JX.install('Button', {
   events : ['start', 'done'],
   members: {
     cbk:function(response){
+      this.getElement().removeAttribute('disabled');
       this.invoke('done', response);
     },
     start:function(){
       this.invoke('start');
+      this.getElement().setAttribute('disabled',true);
       var r = new JX.Request(this.getUri(),JX.bind(this,this.cbk));
       r.setMethod(this.getMethod());
       r.setData(this.getData());
