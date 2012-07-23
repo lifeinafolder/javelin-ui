@@ -66,7 +66,7 @@ JX.install('Carousel', {
       }
 
       //Set the slides
-      var slides = JX.DOM.scry(this.getElement(),'div','item');
+      var slides = JX.DOM.scry(this.getElement(),'div','carousel-item');
       this._slides = slides;
       JX.DOM.hide.apply(null,this._slides);
       var j = slides.length;
