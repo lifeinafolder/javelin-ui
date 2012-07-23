@@ -32,18 +32,16 @@
       });
     </script>
   </head>
-  <body onLoad='prettyPrint()'>
-    <div class="container">
-      <div class="content">
-        <div class="plugin">
-          <h1>Tooltip</h1>
-          <h2>Required Includes</h2>
-          <pre class="prettyprint linenums">
+  <body onLoad='prettyPrint()' style="background:white">
+    <div class="plugin">
+      <h1>Tooltip</h1>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
 &lt;script src="../memoize.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/tooltip/tooltip.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/tooltip/tooltip.css"/&gt;</pre>
-          <h2>Required Markup</h2>
-          <pre class="prettyprint linenums">
+      <h2>Required Markup</h2>
+      <pre class="prettyprint linenums">
 &lt;p data-meta="0_0" data-sigil="tooltip" title="test title"&gt;Dom element must have:
   &lt;ol&gt;
     &lt;li&gt; A data-sigil attribute of 'tooltip'
@@ -51,8 +49,8 @@
     &lt;ol&gt; A data-meta attribute indicating position of config options in mergeData map
   &lt;/ol&gt;
 &lt;/p&gt;</pre>
-          <h2>Code</h2>
-          <pre class="prettyprint linenums">
+      <h2>Code</h2>
+      <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, [
   {
     trigger: 'hover'  // Config options for Example 1
@@ -66,9 +64,10 @@ JX.Stratcom.mergeData(0, [
 JX.initBehaviors({
   'show-tooltip' : []
 });</pre>
-          <h2>Example 1</h2>
-    <p data-meta="0_0" data-sigil="tooltip" title="test title" style="display:inline;">This is a simple example showcasing the Tooltip plugin.</p>
-    <h2>Example 2</h2>
-    <input data-meta="0_1" data-sigil="tooltip" title="input type" type="text"/>
+      <h2>Example 1</h2>
+      <p data-meta="0_0" data-sigil="tooltip" title="test title" style="display:inline;">This is a simple example showcasing the Tooltip plugin.</p>
+      <h2>Example 2</h2>
+      <input data-meta="0_1" data-sigil="tooltip" title="input type" type="text"/>
+    </div>
   </body>
 </html>

@@ -38,19 +38,17 @@
       }
     </style>
   </head>
-  <body onLoad="prettyPrint()">
-    <div class="container">
-      <div class="content">
-        <div class="plugin">
-          <h1>Dropdown</h1>
-          <p>Dropdown plugin allows you to create navigational dropdowns. This is not a typical dropdown. Its a UI control semantically equivalent to a navigational control.</p>
-          <h2>Required Includes</h2>
-          <pre class="prettyprint linenums">
+  <body onLoad="prettyPrint()" style="background:white">
+    <div class="plugin">
+      <h1>Dropdown</h1>
+      <p>Dropdown plugin allows you to create navigational dropdowns. This is not a typical dropdown. Its a UI control semantically equivalent to a navigational control.</p>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
 &lt;script src="plugins/toggle/Toggle.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/dropdown/Dropdown.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/Dropdown/dropdown.css"/&gt;</pre>
-          <h2>Required Markup</h2>
-          <pre class="prettyprint linenums">
+      <h2>Required Markup</h2>
+      <pre class="prettyprint linenums">
 &lt;div id=&quot;dropdown&quot;&gt;
   &lt;div data-sigil=&quot;dropdown-handle&quot;&gt;-&lt;/div&gt;
   &lt;ul data-sigil=&quot;dropdown-menu&quot;&gt;
@@ -59,8 +57,8 @@
     &lt;li data-value=&quot;three&quot; data-sigil=&quot;dropdown-item&quot;&gt;Option 3&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;</pre>
-          <h2>Code</h2>
-          <pre class="prettyprint linenums">
+      <h2>Code</h2>
+      <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, {});
 
 JX.initBehaviors({
@@ -72,16 +70,14 @@ JX.initBehaviors({
     }
   }]
 });</pre>
-          <h2>Example</h2>
-          <div id="dropdown">
-            <div data-sigil="dropdown-handle" class="btn">Select an Option</div>
-            <ul data-sigil="dropdown-menu" class="menu">
-              <li data-value="one" data-sigil="dropdown-item">Option 1 which happens to have a very long label.</li>
-              <li data-value="two" data-sigil="dropdown-item">Option 2</li>
-              <li data-value="three" data-sigil="dropdown-item">Option 3</li>
-            </ul>
-          </div>
-        </div>
+      <h2>Example</h2>
+      <div id="dropdown">
+        <div data-sigil="dropdown-handle" class="btn">Select an Option</div>
+        <ul data-sigil="dropdown-menu" class="menu">
+          <li data-value="one" data-sigil="dropdown-item">Option 1 which happens to have a very long label.</li>
+          <li data-value="two" data-sigil="dropdown-item">Option 2</li>
+          <li data-value="three" data-sigil="dropdown-item">Option 3</li>
+        </ul>
       </div>
     </div>
   </body>

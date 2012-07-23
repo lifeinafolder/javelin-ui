@@ -48,22 +48,20 @@
       });
     </script>
   </head>
-  <body onLoad="prettyPrint()">
-    <div class="container">
-      <div class="content">
-        <div class="plugin">
-          <h1>Button</h1>
-          <p>Button plugin allows you to create buttons with <strong>initial-working-finished</strong> workflow cycle.</p>
-          <h2>Required Includes</h2>
-          <pre class="prettyprint linenums">
+  <body onLoad="prettyPrint()" style="background:white">
+    <div class="plugin">
+      <h1>Button</h1>
+      <p>Button plugin allows you to create buttons with <strong>initial-working-finished</strong> workflow cycle.</p>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
 &lt;script src="plugins/memoize.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/button/Button.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/button/button.css"/&gt;</pre>
-          <h2>Required Markup</h2>
-          <pre class="prettyprint linenums">
+      <h2>Required Markup</h2>
+      <pre class="prettyprint linenums">
 &lt;button data-meta="0_0" data-sigil="button" &gt;Button Text here&lt;/button&gt;</pre>
-          <h2>Required Code</h2>
-          <pre class="prettyprint linenums">
+      <h2>Required Code</h2>
+      <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, [
   {
     uri : "/plugins/button/backend.php", //Your REST endpoint here
@@ -90,7 +88,8 @@ JX.Stratcom.mergeData(0, [
 JX.initBehaviors({
   'button' : []
 });</pre>
-          <h2>Example</h2>
-          <button data-meta="0_0" data-sigil="button" class="btn">Single Toggle</button>
+      <h2>Example</h2>
+      <button data-meta="0_0" data-sigil="button" class="btn">Single Toggle</button>
+    </div>
   </body>
 </html>

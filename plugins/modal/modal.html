@@ -38,93 +38,89 @@
       }
     </script>
   </head>
-  <body onLoad='prettyPrint()'>
-    <div class="container">
-      <div class="content">
-        <div class="plugin">
-          <h1>Modal</h1>
-          <p>Modal plugin allows you to draw user attention to your system messages.</p>
-          <h2>Required Includes</h2>
-          <pre class="prettyprint linenums">
+  <body onLoad='prettyPrint()' style="background:white">
+    <div class="plugin">
+      <h1>Modal</h1>
+      <p>Modal plugin allows you to draw user attention to your system messages.</p>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
 &lt;script src="plugins/keyboard.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="javelin/src/ext/fx/FX.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/modal/Modal.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/modal/modal.css"/&gt;</pre>
-          <h2>Code</h2>
-          <pre class="prettyprint linenums">
+      <h2>Code</h2>
+      <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, {});
 JX.initBehaviors({
-  'show-modal' : [{source : "#my-modal"}] // 'source' could be a url as well.
+'show-modal' : [{source : "#my-modal"}] // 'source' could be a url as well.
 });</pre>
-          <h2>Example</h2>
-          <div style="display:none;">
-            <div id="my-modal">
-              <div class="modal-header">
-                <h3>This is a simple page demoing creating a <strong>Modal</strong>.</h3>
-              </div>
-              <div class="modal-body">
-                <h4>Text in a modal</h4>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-              </div>
-            </div>
+      <h2>Example</h2>
+      <div style="display:none;">
+        <div id="my-modal">
+          <div class="modal-header">
+            <h3>This is a simple page demoing creating a <strong>Modal</strong>.</h3>
           </div>
-          <div class="btn btn-large btn-primary" onclick="modal('#my-modal');">Try Modal</div>
-          <div class="btn btn-large" onclick="modal('http://localhost:8080/plugins/modal/ajax_response.php');">Modal with AJAX content</div>
+          <div class="modal-body">
+            <h4>Text in a modal</h4>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem.</p>
+            <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+            <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+            <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          </div>
         </div>
-        <hr/>
-        <div class="plugin">
-          <h1>Actionable Modal</h1>
-          <p>Actionable Modal plugin allows you to lock your UI to enforce a user action.</p>
-          <h2>Required Includes</h2>
-          <pre class="prettyprint linenums">
+      </div>
+      <div class="btn btn-large btn-primary" onclick="modal('#my-modal');">Try Modal</div>
+      <div class="btn btn-large" onclick="modal('http://localhost:8080/plugins/modal/ajax_response.php');">Modal with AJAX content</div>
+    </div>
+    <hr/>
+    <div class="plugin">
+      <h1>Actionable Modal</h1>
+      <p>Actionable Modal plugin allows you to lock your UI to enforce a user action.</p>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
 &lt;script src="plugins/keyboard.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="javelin/src/ext/fx/FX.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/modal/Modal.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="plugins/modal/ActionableModal.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="plugins/modal/modal.css"/&gt;</pre>
-          <h2>Required Markup</h2>
-          <pre class="prettyprint linenums">
+      <h2>Required Markup</h2>
+      <pre class="prettyprint linenums">
 &lt;div id="my-actionable-modal"&gt;
-  &lt;div data-sigil="modal-header"&gt;&lt;/div&gt;
-  &lt;div data-sigil="modal-body"&gt;&lt;/div&gt;
-  &lt;div data-sigil="modal-footer"&gt;&lt;/div&gt;
+&lt;div data-sigil="modal-header"&gt;&lt;/div&gt;
+&lt;div data-sigil="modal-body"&gt;&lt;/div&gt;
+&lt;div data-sigil="modal-footer"&gt;&lt;/div&gt;
 &lt;/div&gt;</pre>
-          <h2>Code</h2>
-          <pre class="prettyprint linenums">
+      <h2>Code</h2>
+      <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, {});
 
 JX.initBehaviors({
-  'actionable-modal' : [{source : "#my-actionable-modal", action: function(cbk){
-    /**
-     * This function gets invoked if the user says 'ok' to the modal action.
-     * You need to call 'cbk' function with a boolean indicating whether
-     * you want the 'Actionable Modal' to hide now or keep showing.
-     */
-    cbk && cbk(true);
-  }}]
+'actionable-modal' : [{source : "#my-actionable-modal", action: function(cbk){
+/**
+ * This function gets invoked if the user says 'ok' to the modal action.
+ * You need to call 'cbk' function with a boolean indicating whether
+ * you want the 'Actionable Modal' to hide now or keep showing.
+ */
+cbk && cbk(true);
+}}]
 });</pre>
-          <h2>Example</h2>
-          <div style="display:none;">
-            <div id="my-actionable-modal">
-              <div data-sigil="modal-header" class="modal-header">
-                <h3><strong>Delete</strong>.</h3>
-              </div>
-              <div data-sigil="modal-body" class="modal-body">
-                <h4>Are you sure you want to delete this post?</h4>
-              </div>
-              <hr>
-              <div data-sigil="modal-footer"></div>
-            </div>
+      <h2>Example</h2>
+      <div style="display:none;">
+        <div id="my-actionable-modal">
+          <div data-sigil="modal-header" class="modal-header">
+            <h3><strong>Delete</strong>.</h3>
           </div>
-          <div class="btn btn-large btn-primary" onclick="modalAction();">Try Actionable Modal</div>
+          <div data-sigil="modal-body" class="modal-body">
+            <h4>Are you sure you want to delete this post?</h4>
+          </div>
+          <hr>
+          <div data-sigil="modal-footer"></div>
         </div>
       </div>
+      <div class="btn btn-large btn-primary" onclick="modalAction();">Try Actionable Modal</div>
     </div>
   </body>
 </html>
