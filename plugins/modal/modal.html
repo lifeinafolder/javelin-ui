@@ -18,11 +18,11 @@
     <script src="Modal.js" type="text/javascript"></script>
     <script src="ActionableModal.js" type="text/javascript"></script>
     <script>
-      function modal(){
+      function modal(source){
         JX.Stratcom.mergeData(0, {});
 
         JX.initBehaviors({
-          'show-modal' : [{source : "#my-modal"}]
+          'show-modal' : [{source : source}]
         });
       }
 
@@ -54,7 +54,7 @@
           <pre class="prettyprint linenums">
 JX.Stratcom.mergeData(0, {});
 JX.initBehaviors({
-  'show-modal' : [{source : "#my-modal"}]
+  'show-modal' : [{source : "#my-modal"}] // 'source' could be a url as well.
 });</pre>
           <h2>Example</h2>
           <div style="display:none;">
@@ -74,7 +74,8 @@ JX.initBehaviors({
               </div>
             </div>
           </div>
-          <div class="btn btn-large btn-primary" onclick="modal();">Try Modal</div>
+          <div class="btn btn-large btn-primary" onclick="modal('#my-modal');">Try Modal</div>
+          <div class="btn btn-large" onclick="modal('http://localhost:8080/plugins/modal/ajax_response.php');">Modal with AJAX content</div>
         </div>
         <hr/>
         <div class="plugin">
