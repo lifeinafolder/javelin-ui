@@ -2,50 +2,95 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Javelin Example: Simple</title>
-    <script src="../../javelin/pkg/init.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../default.css">
-    <link rel="stylesheet" type="text/css" href="button.css">
-  </head>
-  <body>
-    <button data-meta="0_0" data-sigil="button">Single Toggle</button>
-    <button data-meta="0_1" data-sigil="button">Second Toggle</button>
-  </body>
-  <script>
-    var __DEV__ = 1;
-  </script>
-  <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
-  <script src="../memoize.js" type="text/javascript"></script>
-  <script src="Button.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    JX.Stratcom.mergeData(0, [
-      {
-        uri : "/plugins/button/backend.php",
-        data:
+    <title>Javelin Example: Button</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../css/demos.css">
+    <script type="text/javascript" src="../../js/prettify.js"></script>
+    <script>
+      var __DEV__ = 1;
+    </script>
+    <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
+    <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+    <script src="../memoize.js" type="text/javascript"></script>
+    <script src="Button.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      JX.Stratcom.mergeData(0, [
         {
-          name:'Tom',
-          age:21
+          uri : "/plugins/button/backend.php",
+          data:
+          {
+            name:'Tom',
+            age:21
+          },
+          onStart: function(){
+            var node = this.getElement();
+            JX.DOM.setContent(node,'Processing...');
+          },
+          onDone: function(response){
+            var node = this.getElement();
+            setTimeout(function(){
+              JX.DOM.setContent(node,'Done!');
+            },2000);
+          }
         },
-        onStart: function(){
-          var node = this.getElement();
-          JX.DOM.setContent(node,'loading...');
-        },
-        onDone: function(response){
-          var node = this.getElement();
-          JX.DOM.setContent(node,'hahaha');
+        {
+          uri:"/plugins/button/backend.php",
+          data:{  // XHR Data
+            name:'Rajat',
+            age:27
+          },
+          method:'GET'  // XHR Method, default POST
         }
-      },
-      {
-        uri:"/plugins/button/backend.php",
-        data:{  // XHR Data
-          name:'Rajat',
-          age:27
-        },
-        method:'GET'  // XHR Method, default POST
-      }
-    ]);
-    JX.initBehaviors({
-      'button' : []
-    });
-  </script>
+      ]);
+      JX.initBehaviors({
+        'button' : []
+      });
+    </script>
+  </head>
+  <body onLoad="prettyPrint()">
+    <div class="container">
+      <div class="content">
+        <div class="plugin">
+          <h1>Button</h1>
+          <p>Button plugin allows you to create buttons with <strong>initial-working-finished</strong> workflow cycle.</p>
+          <h2>Required Includes</h2>
+          <pre class="prettyprint linenums">
+&lt;script src="plugins/memoize.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="plugins/button/Button.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="plugins/button/button.css"/&gt;</pre>
+          <h2>Required Markup</h2>
+          <pre class="prettyprint linenums">
+&lt;button data-meta="0_0" data-sigil="button" &gt;Button Text here&lt;/button&gt;</pre>
+          <h2>Required Code</h2>
+          <pre class="prettyprint linenums">
+JX.Stratcom.mergeData(0, [
+  {
+    uri : "/plugins/button/backend.php", //Your REST endpoint here
+    method:'GET'  // XHR Method, default POST
+    data: // Data to transport
+    {
+      name:'Tom',
+      age:21
+    },
+    // callback invoked just before XHR
+    onStart: function(){
+      var node = this.getElement();
+      JX.DOM.setContent(node,'loading...');
+    },
+    // callback invoked just after XHR is completed
+    onDone: function(response){
+      //Receive response from backend here
+      var node = this.getElement();
+      JX.DOM.setContent(node,'hahaha');
+    }
+  }
+]);
+
+JX.initBehaviors({
+  'button' : []
+});</pre>
+          <h2>Example</h2>
+          <button data-meta="0_0" data-sigil="button" class="btn">Single Toggle</button>
+  </body>
 </html>
