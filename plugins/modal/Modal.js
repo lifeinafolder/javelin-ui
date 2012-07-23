@@ -105,21 +105,26 @@ JX.behavior('show-modal', function(config, statics) {
   try { // Is it a DOM node?
     var isDomNode = document.querySelector(source);
     var modal = new JX.Modal(isDomNode, config);
+    modal.listen('show',config.onShow);
+    modal.listen('hide',config.onHide);
+    modal.show();
   }
   catch(e) {
     if (source.search(/https?:\/\//gi) === 0){ // Is it a remote URI ?
       var r = new JX.Request(source, function(response){
         var modal = new JX.Modal(response, config);
+        modal.listen('show',config.onShow);
+        modal.listen('hide',config.onHide);
+        modal.show();
       });
       r.setMethod('GET');
       r.send();
     }
     else { // Assume its a String
       var modal = new JX.Modal(source, config);
+      modal.listen('show',config.onShow);
+      modal.listen('hide',config.onHide);
+      modal.show();
     }
   }
-
-  modal.listen('show',config.onShow);
-  modal.listen('hide',config.onHide);
-  modal.show();
 });
