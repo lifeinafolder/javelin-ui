@@ -112,9 +112,10 @@ JX.behavior('show-modal', function(config, statics) {
   catch(e) {
     if (source.search(/https?:\/\//gi) === 0){ // Is it a remote URI ?
       var r = new JX.Request(source, function(response){
-        var modal = new JX.Modal(response, config);
         modal.listen('show',config.onShow);
         modal.listen('hide',config.onHide);
+        var holder = JX.$H(response);
+        var modal = new JX.Modal(holder, config);
         modal.show();
       });
       r.setMethod('GET');
