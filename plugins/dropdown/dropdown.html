@@ -43,7 +43,7 @@
       <div class="content">
         <div class="plugin">
           <h1>Dropdown</h1>
-          <p>Dropdown plugin allows you to create dropdowns</p>
+          <p>Dropdown plugin allows you to create navigational dropdowns. This is not a typical dropdown. Its a UI control semantically equivalent to a navigational control.</p>
           <h2>Required Includes</h2>
           <pre class="prettyprint linenums">
 &lt;script src="plugins/toggle/toggle.js" type="text/javascript"&gt;&lt;/script&gt;
@@ -66,7 +66,6 @@ JX.Stratcom.mergeData(0, {});
 JX.initBehaviors({
   'show-dropdown' : [{
     selector:'#dropdown',
-    align:'right',
     onItemClick:function(response){
       // Callback function invoked when an item is clicked.
       console.log('Response:', response);
@@ -74,10 +73,10 @@ JX.initBehaviors({
   }]
 });</pre>
           <h2>Example</h2>
-          <div id="dropdown" style="width:119px;">
+          <div id="dropdown">
             <div data-sigil="dropdown-handle" class="btn">Select an Option</div>
             <ul data-sigil="dropdown-menu" class="menu">
-              <li data-value="one" data-sigil="dropdown-item">Option 1</li>
+              <li data-value="one" data-sigil="dropdown-item">Option 1 which happens to have a very long label.</li>
               <li data-value="two" data-sigil="dropdown-item">Option 2</li>
               <li data-value="three" data-sigil="dropdown-item">Option 3</li>
             </ul>
@@ -92,7 +91,6 @@ JX.initBehaviors({
     JX.initBehaviors({
       'show-dropdown' : [{
         selector:'#dropdown',
-        align:'right',
         onItemClick:function(response){
           console.log('Response:', response);
         }
