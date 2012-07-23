@@ -1,4 +1,4 @@
-#Javelin-BootStrap
+#Javelin-UI
 
 ## Bootstrap inspired UI elements for Javelin
 
