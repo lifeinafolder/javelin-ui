@@ -80,6 +80,10 @@ JX.Stratcom.mergeData(0, [
   }
 ]);
 
+/**
+ * You initiate two behaviors i.e. 'form-field' for fields you want to validate
+ * and 'form' for the entire form composition.
+ */
 JX.initBehaviors({
   'form-field' : [
     // {
@@ -119,9 +123,10 @@ JX.initBehaviors({
   ],
   'form' : []
 });</pre>
+    <h2>Example</h2>
     <form data-sigil="form" data-meta="0_0" action="/plugins/button/backend.php">
-      <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Your First Name"/></label>
-      <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Your Second Name"/></label>
+      <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Enter tom to validate this"/></label>
+      <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Enter sawyer to validate this"/></label>
       <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
       <span id="msg"></span>
       <input type="submit" class="btn btn-primary" data-sigil="form-submit" value="submit"/>
