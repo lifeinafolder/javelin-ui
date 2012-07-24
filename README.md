@@ -9,5 +9,9 @@ This code base is a work in progress. I would say, fork it!
 The only thing worth looking at is the plugins folder. It
 has a bunch of plugins designed to work on top of Javelin.
 
-I am in the process of cleaning up the repo and setting up proper Github pages.
-Till then, each plugin folder has a .html file showcasing how to use the plugin.
+If you download the repo and run it locally using MAMP, XAMPP
+the root index.html page is the documentation page for all
+plugins.
+
+Alternatively, each plugin directory has a documentation .html page
+in it.
