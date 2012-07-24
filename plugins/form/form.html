@@ -9,8 +9,7 @@
     <style type="text/css">
       form
       {
-        margin:auto auto;
-        border:1px solid #0BC;
+        border:1px solid #CCC;
         padding:10px;
         width:250px;
       }
@@ -128,8 +127,10 @@ JX.initBehaviors({
       <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Enter tom to validate this"/></label>
       <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Enter sawyer to validate this"/></label>
       <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
-      <span id="msg"></span>
-      <input type="submit" class="btn btn-primary" data-sigil="form-submit" value="submit"/>
+      <label>
+        <div id="msg"></div>
+        <input type="submit" class="btn btn-primary" data-sigil="form-submit" value="submit"/>
+      </label>
     </form>
   </body>
   <script type="text/javascript">
