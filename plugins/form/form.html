@@ -2,23 +2,17 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Javelin Example: Simple</title>
-    <script>
-      var __DEV__ = 1;
-    </script>
-    <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../default.css">
-    <link rel="stylesheet" type="text/css" href="form.css">
+    <title>Javelin Example: Forms</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../css/demos.css">
     <style type="text/css">
       form
       {
         margin:auto auto;
-        position:relative;
-        top:100px;
-        left:20%;
         border:1px solid #0BC;
         padding:10px;
-        width:150px;
+        width:250px;
       }
 
       form label
@@ -37,19 +31,102 @@
         color:green;
       }
     </style>
+    <script type="text/javascript" src="../../js/prettify.js"></script>
+    <script>
+      var __DEV__ = 1;
+    </script>
+    <script src="../../javelin/pkg/init.dev.js" type="text/javascript"></script>
+    <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
+    <script src="../Memoize.js" type="text/javascript"></script>
+    <script src="Form.js" type="text/javascript"></script>
   </head>
-  <body>
+  <body onLoad="prettyPrint()" style="background:white">
+    <div class="plugin">
+      <h1>Form</h1>
+      <p>Form plugin allows you to create validation based form elements.</p>
+      <h2>Required Includes</h2>
+      <pre class="prettyprint linenums">
+&lt;script src="plugins/memoize.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="plugins/form/Form.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+      <h2>Required Markup</h2>
+      <pre class="prettyprint linenums">
+&lt;form data-sigil=&quot;form&quot; data-meta=&quot;0_0&quot; action=&quot;/plugins/button/backend.php&quot;&gt;
+  &lt;label&gt;First Name: &lt;input type=&quot;text&quot; id=&quot;firstName&quot; data-sigil=&quot;form-field&quot; placeholder=&quot;Your First Name&quot;/&gt;&lt;/label&gt;
+  &lt;label&gt;Last Name: &lt;input type=&quot;text&quot; id=&quot;lastName&quot; data-sigil=&quot;form-field&quot; placeholder=&quot;Your Second Name&quot;/&gt;&lt;/label&gt;
+  &lt;label&gt;Age: &lt;input type=&quot;number&quot; id=&quot;age&quot; data-sigil=&quot;form-field&quot; placeholder=&quot;Your Age&quot;/&gt;&lt;/label&gt;
+  &lt;input type=&quot;submit&quot; data-sigil=&quot;form-submit&quot; value=&quot;submit&quot;/&gt;
+&lt;/form&gt;
+      </pre>
+      <h2>Code</h2>
+      <pre class="prettyprint linenums">
+JX.Stratcom.mergeData(0, [
+  {
+    onStart:function(){
+      JX.DOM.setContent(JX.$('msg'), 'Validating...');
+    },
+    onDone: function(response){
+      console.log('form submitted', response);
+    },
+    onValidationFail: function(){
+      var msg = JX.$N('div',{className:'error'},'Validation Failed');
+      JX.DOM.setContent(JX.$('msg'), msg);
+      console.log('validation failed');
+    },
+    onValidationDone: function(){
+      var msg = JX.$N('div',{className:'pass'},'Validation Passed');
+      JX.DOM.setContent(JX.$('msg'), msg);
+      console.log('validation succeeded');
+    }
+  }
+]);
+
+JX.initBehaviors({
+  'form-field' : [
+    // {
+    //   selector: <Required> DOM selector of the form field,
+    //   validationFn: <Required> Function to use to validate this field:
+    //                  function(node, cbk){}
+    //                    @param {DOMElement} node - DOM node being validated
+    //                    @param {Function} cbk - callback function being returned 'boolean' result of validation
+    //   onDone: <Optional> Function that is invoked once validation process is completed
+    //            function(res){}
+    //              @param {Boolean} res - result of the validation (true/false)
+    //   trigger: <Optional> {String} One of these events ['focus','blur','change'] (Default: blur) to
+    //            trigger validation
+    // },
+    {
+      selector:'#firstName',
+      validationFn: function(node, cbk){
+        console.log('validating firstName...');
+        cbk && cbk(node.value.toLowerCase() === 'tom');
+      },
+      onDone:function(res){
+        console.log('validated firstName:', res);
+      }
+    },
+    {
+      selector:'#lastName',
+      validationFn: function(node, cbk){
+        console.log('validating lastName...');
+        setTimeout(function(){
+          cbk && cbk(node.value.toLowerCase() === 'sawyer');
+        }, 5000);
+      },
+      onDone:function(res){
+        console.log('validated lastName:', res);
+      }
+    }
+  ],
+  'form' : []
+});</pre>
     <form data-sigil="form" data-meta="0_0" action="/plugins/button/backend.php">
       <label>First Name: <input type="text" id="firstName" data-sigil="form-field" placeholder="Your First Name"/></label>
       <label>Last Name: <input type="text" id="lastName" data-sigil="form-field" placeholder="Your Second Name"/></label>
       <label>Age: <input type="number" id="age" data-sigil="form-field" placeholder="Your Age"/></label>
       <span id="msg"></span>
-      <input type="submit" data-sigil="form-submit" value="submit"/>
+      <input type="submit" class="btn btn-primary" data-sigil="form-submit" value="submit"/>
     </form>
   </body>
-  <script src="../../javelin/pkg/javelin.dev.js" type="text/javascript"></script>
-  <script src="../Memoize.js" type="text/javascript"></script>
-  <script src="Form.js" type="text/javascript"></script>
   <script type="text/javascript">
     JX.Stratcom.mergeData(0, [
       {
