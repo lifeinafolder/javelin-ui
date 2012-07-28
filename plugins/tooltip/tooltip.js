@@ -9,7 +9,7 @@
  * @group Plugin
  */
 JX.install('Tooltip', {
-  construct: function(node, config){
+  construct: function(node, config) {
     config = config || {};
     if (__DEV__) {
       if (!node) {
@@ -19,16 +19,35 @@ JX.install('Tooltip', {
       }
     }
 
-    //JX.Stratcom.addSigil(element,'jx-tooltip')
     this.setElement(node);
+    if (config.title) {
+      try {
+        this.setTitle(document.querySelector(config.title));
+      }
+      catch (e) {
+        JX.$E('\'title\' property needs to be a DOM selector');
+        return;
+      }
+    }
+    else { // try to pick from the 'title' attribute
+      var titleAttribute = this.getElement().getAttribute('title');
+      if (titleAttribute) {
+        this.setTitle(titleAttribute);
+        this.getElement().removeAttribute('title'); //remove original DOM based tooltip
+      }
+      else {
+        JX.$E('DOM node is missing \'title\' attribute');
+        return;
+      }
+    }
+
     this.setTrigger(config.trigger);
     this.setPosition(config.position);
   },
   members: {
     present:false,
-    title:null,
     tooltip:null,
-    setPos:function(){
+    setPos: function() {
         var position = this.getPosition() || 'top';
         var tooltip = this.tooltip;
 
@@ -59,23 +78,57 @@ JX.install('Tooltip', {
         }
         JX.$V(cords.x,cords.y).setPos(this.tooltip);
     },
-    show:function(){
+    show: function() {
       if(!this.present){
         this.tooltip = JX.$N('span',{className:'jx-tooltip'});
-        this.title = this.title || this.getElement().getAttribute('title');
-        JX.DOM.appendContent(this.tooltip, this.title);
+        var title = this.getTitle();
+        JX.DOM.appendContent(this.tooltip, title);
         document.body.appendChild(this.tooltip);
         this.setPos();//position the tooltip correctly
-        this.getElement().removeAttribute('title');
+
+        this._listeners = [];
+
+        if (this.getTrigger() === 'hover') {
+          var entryListener = JX.DOM.listen(this.tooltip, 'mouseover', null, JX.bind(this,function(e){
+            clearTimeout(this._timerId);
+          }));
+          this._listeners.push(entryListener);
+
+          var exitListener = JX.DOM.listen(this.tooltip, 'mouseout', null, JX.bind(this,function(e){
+            if(!this.isDescendant(this.tooltip, e.getRawEvent().relatedTarget)){
+              this.hide();
+            }
+          }));
+          this._listeners.push(exitListener);
+        }
       }
       this.present = true;
     },
-    hide:function(){
-      this.present = false;
-      JX.DOM.remove(this.tooltip);
+    /**
+     * Function to check if a DOM node is a descendant of another DOM node
+     * TODO: Move to DOM.js maybe
+     */
+    isDescendant: function(parent, child) {
+      var node = child.parentNode;
+      while (node != null) {
+         if (node == parent) {
+             return true;
+         }
+         node = node.parentNode;
+      }
+      return false;
+    },
+    hide: function() {
+      this._timerId = setTimeout(JX.bind(this, function(){
+        this.present = false;
+        JX.DOM.remove(this.tooltip);
+        for(var i=this._listeners.length;i--;){
+          this._listeners[i].remove();
+        }
+      }), 100);
     }
   },
-  statics:{
+  statics: {
     positions: ['top','bottom', 'left', 'right'],
     trigger: ['hover','focus','manual'] //TODO: For future validation purposes
   },
@@ -83,6 +136,7 @@ JX.install('Tooltip', {
     element:null,
     trigger:null,
     position:null,
+    title:null
   }
 });
 

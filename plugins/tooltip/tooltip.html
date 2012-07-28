@@ -7,6 +7,16 @@
     <link rel="stylesheet" type="text/css" href="../../css/prettify.css">
     <link rel="stylesheet" type="text/css" href="tooltip.css">
    <link rel="stylesheet" type="text/css" href="../../css/demos.css">
+   <style>
+      #my-tooltip
+      {
+        width:200px;
+        height:100px;
+        background:whiteSmoke;
+        color:#666;
+        padding:20px;
+      }
+   </style>
     <script>
       var __DEV__ = 1;
     </script>
@@ -19,7 +29,8 @@
     <script type="text/javascript">
       JX.Stratcom.mergeData(0, [
         {
-          trigger: 'hover'
+          trigger: 'hover',
+          title:'#my-tooltip'
         },
         {
           trigger:'focus',
@@ -66,7 +77,15 @@ JX.initBehaviors({
   'show-tooltip' : []
 });</pre>
       <h2>Example 1</h2>
-      <p data-meta="0_0" data-sigil="tooltip" title="test title" style="display:inline;">This is a simple example showcasing the Tooltip plugin.</p>
+      <p data-meta="0_0" data-sigil="tooltip" style="display:inline;">This is a simple example showcasing the Tooltip plugin.</p>
+      <div style="display:none;">
+        <div id="my-tooltip">
+            <div style="">
+              <img src="http://dummyimage.com/50"/>
+              <a href="http://lolcats.com">Do Not Click This Link.</a>
+            </div>
+        </div>
+      </div>
       <h2>Example 2</h2>
       <input data-meta="0_1" data-sigil="tooltip" title="input type" type="text"/>
     </div>
