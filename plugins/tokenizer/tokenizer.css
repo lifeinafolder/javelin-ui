@@ -25,10 +25,6 @@ div.jx-typeahead-results a.focused {
   text-decoration: none;
 }
 
-input.jx-typeahead {
-  width: 200px;
-}
-
 input.jx-typeahead-placeholder {
   color: #888888;
 }
@@ -41,7 +37,6 @@ input.jx-typeahead-placeholder {
   padding:5px;
   margin-right: 5px;
   display: inline-block;
-  margin-bottom:5px;
 }
 
 .jx-tokenizer-x
@@ -53,4 +48,15 @@ input.jx-typeahead-placeholder {
 .jx-tokenizer-x:hover
 {
   background:black;
+}
+
+input.jx-tokenizer-input
+{
+  border:none;
+  padding:5px;
+}
+
+input.jx-tokenizer-input:focus
+{
+  outline:none;
 }
