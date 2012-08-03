@@ -120,12 +120,14 @@ JX.install('Tooltip', {
     },
     hide: function() {
       this._timerId = setTimeout(JX.bind(this, function(){
-        this.present = false;
-        JX.DOM.remove(this.tooltip);
-        for(var i=this._listeners.length;i--;){
-          this._listeners[i].remove();
-        }
-      }), 100);
+        JX.FX.fade(this.tooltip,0,500,JX.bind(this,function(){
+          this.present = false;
+          JX.DOM.remove(this.tooltip);
+          for(var i=this._listeners.length;i--;){
+            this._listeners[i].remove();
+          }
+        }));
+      }), 500);
     }
   },
   statics: {
